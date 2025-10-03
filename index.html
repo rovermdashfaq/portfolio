@@ -1466,22 +1466,28 @@
                 </div>
                 
                 <div class="contact-form">
-  <form id="contactForm" action="https://formspree.io/f/mabcdxyz" method="POST">
-      <div class="form-group">
-          <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-      </div>
-      <div class="form-group">
-          <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-      </div>
-      <div class="form-group">
-          <input type="text" name="subject" class="form-control" placeholder="Subject" required>
-      </div>
-      <div class="form-group">
-          <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
-      </div>
-      <button type="submit" class="btn">Send Message</button>
+  <form id="contactForm" action="https://formspree.io/f/mvgwrdpb" method="POST">
+    <div class="form-group">
+      <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+    </div>
+    <div class="form-group">
+      <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+    </div>
+    <div class="form-group">
+      <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+    </div>
+    <div class="form-group">
+      <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
+    </div>
+
+    <!-- Optional: Formspree কে জানান সাবমিটের বিষয় ও রিডাইরেক্ট পৃষ্ঠা -->
+    <input type="hidden" name="_subject" value="New message from website">
+    <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+
+    <button type="submit" class="btn">Send Message</button>
   </form>
 </div>
+
 
             </div>
         </div>
