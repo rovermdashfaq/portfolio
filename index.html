@@ -1,393 +1,1667 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Md. Ashfaqur Rahman Tanim</title>
-  <meta name="description" content="Md. Ashfaqur Rahman Tanim — Rover Scout, youth leader, volunteer, and web designer from Kishoreganj, Bangladesh.">
-  <meta name="keywords" content="Md. Ashfaqur Rahman Tanim, Rover Scout, Volunteer, Youth Leader, Bangladesh, Projects, Portfolio">
-  
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Md. Ashfaqur Rahman Tanim | Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #7e22ce;
+            --accent: #06b6d4;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
 
-  <!-- Basic theme + neon effects -->
-  <style>
-    :root{
-      --main-color: #00b894;
-      --accent-color: #e74c3c; /* Neon red for flag effect */
-      --bg-color: #0f0f0f;
-      --card-bg: #111;
-      --muted: #bfcfc6;
-      --text-color: #ffffff;
-      --glass: rgba(255,255,255,0.02);
-    }
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    *{box-sizing:border-box;margin:0;padding:0}
-    html,body{height:100%;scroll-behavior:smooth}
-    body{
-      font-family:'Poppins',sans-serif;
-      background:var(--bg-color);
-      color:var(--text-color);
-      line-height:1.5;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    /* Header / nav */
-    header{
-      position:sticky;top:0;z-index:1000;
-      background:#000;
-      border-bottom:1px solid rgba(255,255,255,0.03);
-      padding:12px 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      box-shadow:0 0 12px rgba(0,184,148,0.3);
-    }
-    .logo{
-      color:var(--main-color);
-      font-weight:700;
-      font-size:1.15rem;
-      letter-spacing:0.2px;
-      text-shadow:0 0 8px var(--main-color);
-    }
-    nav{display:flex;gap:18px;align-items:center}
-    nav ul{
-      list-style:none;
-      display:flex;
-      gap:14px;
-      align-items:center;
-    }
-    nav a{
-      color:var(--text-color);
-      text-decoration:none;
-      font-weight:500;
-      font-size:0.95rem;
-      transition:0.3s;
-    }
-    nav a:hover{color:var(--main-color); text-shadow:0 0 4px var(--main-color)}
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
 
-    /* Hamburger for mobile */
-    .hamburger{
-      display:none;
-      width:40px;height:36px;
-      align-items:center;justify-content:center;
-      cursor:pointer;
-      background:transparent;border:none;color:var(--text-color);
-    }
-    .hamburger .bar{
-      width:22px;height:2px;background:var(--text-color);
-      margin:3px 0;border-radius:2px;
-      transition:transform .25s ease,opacity .25s ease;
-    }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    /* Cover */
-    #cover-caption{
-      text-align:center;color:var(--main-color);
-      font-weight:600;padding:18px 12px;font-size:1rem;
-      text-shadow:0 0 6px var(--main-color);
-    }
-    #cover-photo{
-      margin:0 auto;max-width:1200px;padding:12px;text-align:center;
-    }
-    .cover-photo{
-      width:100%;max-width:1200px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,0.7);
-      display:block;margin:0 auto;object-fit:cover;
-    }
+        section {
+            padding: 80px 0;
+        }
 
-    /* Sections */
-    section{padding:48px 18px}
-    .section-content{
-      max-width:1000px;margin:0 auto;background:var(--card-bg);
-      padding:20px;border-radius:10px;
-      box-shadow:0 6px 18px rgba(0,0,0,0.6);
-      border:1px solid rgba(0,184,148,0.06);
-    }
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
 
-    /* Home block */
-    .home{text-align:center}
-    .home .profile-photo{
-      width:180px;height:180px;border-radius:50%;object-fit:cover;margin:18px auto;display:block;
-      box-shadow:0 0 24px var(--main-color);
-      transition: transform 0.3s ease;
-    }
-    .home .profile-photo:hover{transform:scale(1.05)}
-    .home h1{font-size:1.7rem;margin-top:6px; text-shadow:0 0 6px var(--main-color)}
-    .home h2{font-size:1.05rem;color:var(--muted);margin-top:6px; min-height:24px;}
+        h1 {
+            font-size: 3.5rem;
+        }
 
-    .social-icons{margin-top:12px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-    .social-icons a{
-      display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;
-      background:var(--glass);color:var(--main-color);text-decoration:none;font-size:18px;
-      transition:transform .15s ease,background .15s ease, color .15s ease, box-shadow .2s ease;
-    }
-    .social-icons a:hover{
-      transform:translateY(-4px);
-      background:rgba(0,184,148,0.08);
-      color:#fff;
-      box-shadow:0 0 12px var(--main-color);
-    }
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
 
-    /* Projects grid */
-    .project-box{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:16px}
-    .project-card{
-      background:#0f0f0f;padding:16px;border-radius:10px;border:1px solid rgba(0,184,148,0.06);
-      transition:0.3s;
-    }
-    .project-card:hover{
-      transform:translateY(-5px);
-      box-shadow:0 0 12px var(--main-color);
-    }
-    .project-card h3{color:var(--main-color);margin-bottom:8px; text-shadow:0 0 4px var(--main-color);}
-    .project-card a{color:var(--main-color);text-decoration:none;font-weight:600}
-    .badge{
-      display:inline-block;padding:2px 6px;margin-left:6px;font-size:0.7rem;
-      background:var(--accent-color);color:#fff;border-radius:4px;
-      text-shadow:0 0 2px #fff;
-    }
+        h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
 
-    ul{margin-top:10px;padding-left:18px}
-    li{margin:8px 0;color:var(--muted)}
+        h3 {
+            font-size: 1.8rem;
+        }
 
-    /* Back to top button */
-    #topBtn{
-      position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;
-      background:var(--main-color);border:none;color:#fff;display:none;align-items:center;justify-content:center;
-      box-shadow:0 8px 22px rgba(0,0,0,0.6);cursor:pointer;font-size:18px;z-index:1200;
-      transition:0.3s;
-    }
-    #topBtn:hover{transform:scale(1.1);box-shadow:0 0 12px var(--main-color);}
+        p {
+            margin-bottom: 1rem;
+            color: var(--gray);
+        }
 
-    /* Footer */
-    footer{
-      text-align:center;padding:16px 12px;
-      color:var(--muted);
-      border-top:1px solid rgba(255,255,255,0.03);
-      margin-top:48px;
-    }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition);
+        }
 
-    /* Responsive */
-    @media (max-width:820px){
-      nav ul{display:none;position:absolute;right:14px;top:64px;background:#000;border-radius:8px;padding:12px;flex-direction:column;min-width:180px;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
-      nav ul.open{display:flex}
-      .hamburger{display:flex}
-      header{padding:10px 12px}
-    }
-    @media (max-width:420px){
-      .home h1{font-size:1.4rem}
-      .home h2{font-size:0.95rem}
-    }
-  </style>
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 20px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        .header-scrolled {
+            padding: 10px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            position: relative;
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--dark);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* Hero Section */
+        .hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(126, 34, 206, 0.15) 100%);
+}
+
+
+        .hero-content {
+            width: 60%;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            font-size: 3.2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-image {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40%;
+            max-width: 500px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* About Section */
+        .about {
+            background-color: white;
+        }
+
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+    flex: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 3px solid blue;
+    padding: 2px;
+    display: inline-block;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 50%; /* ছবিও গোল থাকবে */
+}
+.about-image:hover {transform: scale(1.1);}
+
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-text h3 {
+            margin-bottom: 1.5rem;
+        }
+
+        .personal-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Skills Section */
+        .skills {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(126, 34, 206, 0.05) 100%);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .skill-card h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Projects Section */
+        .projects {
+            background-color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            background: white;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 20px;
+        }
+
+        .project-content h3 {
+            margin-bottom: 10px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .project-tag {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: 5px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Websites Section */
+        .websites {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(126, 34, 206, 0.05) 100%);
+        }
+
+        .websites-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .website-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .website-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        .website-preview {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .website-preview-frame {
+            width: 100%;
+            height: 100%;
+            background: white;
+            overflow: hidden;
+            position: relative;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .website-preview-frame:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            background: #e2e8f0;
+            border-bottom: 1px solid #cbd5e1;
+            z-index: 2;
+        }
+
+        .website-preview-frame:after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 15px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #f87171;
+            box-shadow: 20px 0 0 #fbbf24, 40px 0 0 #10b981;
+            z-index: 3;
+        }
+
+        .website-iframe {
+            width: 100%;
+            height: calc(100% - 30px);
+            border: none;
+            margin-top: 30px;
+            background: white;
+        }
+
+        .website-content {
+            padding: 25px;
+        }
+
+        .website-content h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .website-content p {
+            margin-bottom: 20px;
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        .website-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .website-link:hover {
+            color: var(--secondary);
+            transform: translateX(5px);
+        }
+
+        /* Loading for iframes */
+        .iframe-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: var(--gray);
+        }
+
+        .iframe-loading .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(37, 99, 235, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        /* Achievements Section */
+        .achievements {
+            background-color: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .timeline-content img.achievement-img {
+    width: 100%;
+    max-width: 280px; /* ছবির সর্বোচ্চ সাইজ */
+    border-radius: 12px; /* কার্ডের স্টাইলের সাথে মিল */
+    margin: 10px 0 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* নরম শ্যাডো */
+    display: block;
+}
+.achievement-img:hover {transform: scale(1.2);}
+
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .timeline-item {
+            width: 50%;
+            padding: 20px 40px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary);
+        }
+
+        .timeline-item:nth-child(odd):before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even):before {
+            left: -10px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .timeline-date {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background-color: white;
+        }
+
+        .contact-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .contact-info {
+            flex: 1;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            flex: 1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .footer-column h4 {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-column h4:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-column ul li a:hover {
+            color: var(--primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(37, 99, 235, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero-content {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .hero-image {
+                display: none;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .websites-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .timeline:before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 0;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+            }
+            
+            .timeline-item:before {
+                left: 10px !important;
+            }
+            
+            .personal-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .websites-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .website-preview {
+                height: 250px;
+            }
+        }
+    </style>
 </head>
-
 <body>
-<a href="#main" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">Skip to content</a>
-
-<header>
-  <div class="logo">Md. Ashfaqur Rahman Tanim</div>
-  <nav aria-label="Main navigation">
-    <button class="hamburger" id="hamburgerBtn" aria-expanded="false" aria-controls="mainNav" title="Menu">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-    <ul id="mainNav" role="menu">
-      <li role="none"><a role="menuitem" href="#home">Home</a></li>
-      <li role="none"><a role="menuitem" href="#about">About</a></li>
-      <li role="none"><a role="menuitem" href="#projects">Projects</a></li>
-      <li role="none"><a role="menuitem" href="#skills">Skills</a></li>
-      <li role="none"><a role="menuitem" href="#achievements">Achievements</a></li>
-      <li role="none"><a role="menuitem" href="#goals">Goals</a></li>
-      <li role="none"><a role="menuitem" href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-</header>
-
-<div id="cover-caption">Welcome to my world of creativity, leadership, and service 🌍</div>
-<section id="cover-photo">
-  <img class="cover-photo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiYxy4_HTA-RRFdv5oQgt7Jc_D-UkxhgY-FRf7RbVAGtSgEwAZcAYVOGI1y1hE2JCyZkX4nPXrqnfGr3o8qVSbJZATz4f_FYLy-NtxT-oytc-EksgL-abar6Mjha615osEHQl4prb5d5A9ydaAxsXuYFYShzXsakvHrbkbjXRmr5KOXL341S4N7WOkxoTSE/s2160/1000031336.png" alt="Cover image showing community service activities" loading="lazy">
-</section>
-
-<main id="main">
-
-<section id="home" class="home">
-  <div class="section-content">
-    <h1>Hello, I'm <span style="color:var(--main-color)">Md. Ashfaqur Rahman Tanim</span></h1>
-    <h2><span id="typing">Student, Rover Scout, Youth Leader, Volunteer</span><span id="cursor" aria-hidden="true">|</span></h2>
-
-    <img class="profile-photo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi6bqn8erFAoHXsW6n4wIfhy6KBcJ5rm51m3YVU3Ey57bs2SwNMg-3Fmm5QrC22YnCZPa_Uf0cyZRBnTOd7Xz8n-FrWVPS91GI9KNzvJ78KF8hmLE0UlfuxmcVCHnQdFQAbf1JcOsVjek9E33colfKU9DZdR_ZWrJMKP-F6Wu5GCJ6oJXjzfBAsQvGOXrw5/s1161/1000027316.png" alt="Md. Ashfaqur Rahman Tanim smiling, wearing Rover Scout uniform" loading="lazy">
-
-    <div class="social-icons" aria-label="Social links">
-      <a href="https://wa.me/qr/3ITBKA5Y5SUSI1" target="_blank" rel="noopener noreferrer" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:mdashfaqurrahmantanim@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.instagram.com/md.ashfaq01" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.youtube.com/@md.ashfaq01" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.facebook.com/MD.Ashfaq01" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
     </div>
-  </div>
-</section>
 
-<section id="about">
-  <div class="section-content">
-    <h2>About Me</h2>
-    <p>
-      I am <strong>Md. Ashfaqur Rahman Tanim</strong> (born 13 November 2005), a Student of Gurudayal Government College and Rover Mate at Gurudayal Government College Rover Scout Group, Kishoreganj (Unit-03).
-      I’m passionate about youth leadership, community service, and building digital projects that help people.  
-      My focus areas are environmental action, disaster relief, and creating small, useful web tools for my community.
-    </p>
-  </div>
-</section>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Md. Ashfaqur Rahman Tanim</a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#websites">Websites</a></li>
+                    <li><a href="#achievements">Achievements</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
 
-<section id="projects">
-  <div class="section-content">
-    <h2>Key Projects</h2>
-    <div class="project-box" aria-live="polite">
-      <div class="project-card">
-        <h3>Blood Donor BD Database <span class="badge">Web Tool</span></h3>
-        <p>Searchable donor directory to help in emergencies.</p>
-        <p><a href="https://blood-donor-bd.github.io/Database/" target="_blank" rel="noopener noreferrer">Open database →</a></p>
-      </div>
-
-      <div class="project-card">
-        <h3>Flood Relief Mission 2024 <span class="badge">Relief</span></h3>
-        <p>Provided food, medicine & shelter support to flood-affected families in Sherpur.</p>
-        <p><a href="https://sdgs.scout.org/project/rover-scouts-flood-relief-mission-lifeline-flood-victims-0" target="_blank" rel="noopener noreferrer">Project details →</a></p>
-      </div>
-
-      <div class="project-card">
-        <h3>Stay Clean, Stay Strong <span class="badge">Awareness</span></h3>
-        <p>Awareness program against drugs and tobacco in local schools.</p>
-        <p><a href="https://sdgs.scout.org/project/stay-clean-stay-strong-say-no-drugs-and-smoke-0" target="_blank" rel="noopener noreferrer">Project details →</a></p>
-      </div>
-
-      <div class="project-card">
-        <h3>One Tree, One Hope — Let’s Green the Globe <span class="badge">Environment</span></h3>
-        <p>Tree-planting initiative to promote a greener, sustainable planet.</p>
-        <p><a href="https://sdgs.scout.org/project/one-tree-one-hope-lets-green-globe" target="_blank" rel="noopener noreferrer">Project details →</a></p>
-      </div>
-
-      <div class="project-card">
-        <h3>Be a Hero, Clean Up Zero — Plastic Free, Future Key <span class="badge">Environment</span></h3>
-        <p>Cleanliness and plastic-free awareness campaign for a sustainable future.</p>
-        <p><a href="https://sdgs.scout.org/project/be-hero-clean-zero-plastic-free-future-key" target="_blank" rel="noopener noreferrer">Project details →</a></p>
-      </div>
-
-      <div class="project-card">
-        <h3>Scouts on Duty, Traffic in Harmony <span class="badge">Traffic Management</span></h3>
-        <p>Volunteered to manage traffic after July 24th uprising to ensure smooth city movement.</p>
-        <p><a href="https://sdgs.scout.org/project/scouts-duty-traffic-harmony" target="_blank" rel="noopener noreferrer">Project details →</a></p>
-      </div>
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop">
+        <i class="fas fa-arrow-up"></i>
     </div>
-  </div>
-</section>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+          <div class="hero-image">
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCDeXufBywGlGcvjFv5OaZNnGnIFboYZgUyo9NPcDt7SH5dWhG6Kv7wOtGMm5uBfA-2RCI41U0IWscQhEPQ9_6mHg192N68FaFDDE4HIfb8zXw6Ubafj329ToS6mYTqHo8Wu8aRidwjczDQZ4Id_t7K-E32b8ZthoHTIH3r86pWwfOmFdNvgcQOOeHBDc/s2000/1000038033.png" alt="Md. Ashfaqur Rahman Tanim">
+            </div>
+            <div class="hero-content">
+                <h1>Md. Ashfaqur Rahman Tanim</h1>
+                <p>Student, Rover Scout, Youth Leader & Volunteer dedicated to community service and creating positive change.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn">Get In Touch</a>
+                    <a href="#projects" class="btn btn-outline">View Projects</a>
+                    
+                    
+                </div>
+<div class="hero-btns" style="margin-top: 20px; display: flex; gap: 10px;">
+    <a href="#achievements" class="btn btn-outline">Achievements</a>
+    <a href="#websites" class="btn btn-outline">Websites</a>
+</div>
 
 
-<section id="skills">
-  <div class="section-content">
-    <h2>Skills</h2>
-    <ul>
-      <li>Web design & basic development (HTML, CSS, Blogger)</li>
-      <li>Project coordination & volunteer leadership</li>
-      <li>Social media & digital communication</li>
-      <li>Event planning & mobilization</li>
-      <li>Creative writing & content creation</li>
-    </ul>
-  </div>
-</section>
+            </div>
+            
+        </div>
+    </section>
 
-<section id="achievements">
-  <div class="section-content">
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <div class="about-image">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi6bqn8erFAoHXsW6n4wIfhy6KBcJ5rm51m3YVU3Ey57bs2SwNMg-3Fmm5QrC22YnCZPa_Uf0cyZRBnTOd7Xz8n-FrWVPS91GI9KNzvJ78KF8hmLE0UlfuxmcVCHnQdFQAbf1JcOsVjek9E33colfKU9DZdR_ZWrJMKP-F6Wu5GCJ6oJXjzfBAsQvGOXrw5/s1161/1000027316.png" alt="Profile Picture">
+                </div>
+                <div class="about-text">
+                    <h3>Md. Ashfaqur Rahman Tanim</h3>
+                    <p>I am a dedicated student, Rover Scout, and youth leader with a passion for community service and creating positive change. Currently studying at Gurudayal Government College, Kishoreganj, I serve as a Rover Mate in the Gurudayal Government College Rover Scout Group, Unit-03.</p>
+                    
+                    <div class="personal-info">
+                        <div class="info-item">
+                            <i class="fas fa-user"></i>
+                            <span>Md. Ashfaqur Rahman Tanim</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-birthday-cake"></i>
+                            <span>13 November 2005</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Kishoreganj, Bangladesh</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Gurudayal Government College</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+880 1931-853063</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>rovermdashfaq@gmail.com</span>
+                        </div>
+                    </div>
+                    
+                    <p>My journey in scouting has shaped my leadership skills and commitment to serving others. I've led various community initiatives and participated in national youth forums to contribute to positive social change.</p>
+                    
+                    <a href="#contact" class="btn">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2>My Skills</h2>
+            <div class="skills-container">
+                <div class="skill-card">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Web Design & Development</h3>
+                    <p>Creating responsive and user-friendly websites using HTML, CSS, and Blogger platform. Experience in building functional web solutions for community needs.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Project Coordination & Leadership</h3>
+                    <p>Leading volunteer teams and coordinating community projects from planning to execution, ensuring successful outcomes and community impact.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-share-alt"></i>
+                    <h3>Social Media & Digital Communication</h3>
+                    <p>Managing social media platforms, creating engaging content, and leveraging digital tools for community outreach and awareness campaigns.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Event Planning & Mobilization</h3>
+                    <p>Organizing and mobilizing participants for community events, awareness programs, and volunteer initiatives with effective planning and execution.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-pen-fancy"></i>
+                    <h3>Creative Writing & Content Creation</h3>
+                    <p>Developing compelling written content for blogs, social media, and awareness campaigns to effectively communicate messages and engage audiences.</p>
+                </div>
+                <div class="skill-card">
+                    <i class="fas fa-hands-helping"></i>
+                    <h3>Community Service & Volunteer Management</h3>
+                    <p>Expertise in organizing and leading community service initiatives, disaster relief efforts, and volunteer programs for social impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2>My Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEigU5ojym68vG-uwIbcwzotFAprYz3u-0KrNkSmbdS1Bs7UJ1lXfjcZYnBVr5KdR9dKfhhsvmJzgvg49J11QUunldzBox2qPNBbMxd8HJUNO9BsODk_ag9oaTrswHs1e3Zy5w2X__4bez-U-L6_Q8V1ypLR_pJ2R39yCDdWGWfZjf5Zs0XaRrn45gE-_TQ/s720/1000037960.jpg" alt="Blood Donor BD Database">
+                    </div>
+                    <div class="project-content">
+                        <h3>Blood Donor BD Database</h3>
+                        <p>A searchable donor directory to connect blood donors with those in need, facilitating life-saving connections in emergency situations.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Web Development</span>
+                            <span class="project-tag">Community Service</span>
+                        </div>
+                        <a href="https://blood-donor-bd.github.io/Database/" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://s3sdghub.s3.eu-west-1.amazonaws.com/core-cms/public/styles/media_image_large/public/1000023539.jpg?itok=3WDomX5S" alt="Flood Relief Mission">
+                    </div>
+                    <div class="project-content">
+                        <h3>Flood Relief Mission 2024</h3>
+                        <p>Organized relief efforts for flood victims in Sherpur, providing essential supplies and support to affected communities during crisis.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Disaster Relief</span>
+                            <span class="project-tag">Community Service</span>
+                        </div>
+                        <a href="https://sdgs.scout.org/project/rover-scouts-flood-relief-mission-lifeline-flood-victims-0" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://s3sdghub.s3.eu-west-1.amazonaws.com/core-cms/public/styles/project_teaser/public/1000023162.jpg?h=f1299890&itok=Wr2fBdEw" alt="Stay Clean, Stay Strong">
+                    </div>
+                    <div class="project-content">
+                        <h3>Stay Clean, Stay Strong, Say No To Drugs and Smoke</h3>
+                        <p>Awareness program against drugs and tobacco, educating youth about the dangers of substance abuse and promoting healthy lifestyle choices.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Awareness</span>
+                            <span class="project-tag">Youth Engagement</span>
+                        </div>
+                        <a href="https://sdgs.scout.org/project/stay-clean-stay-strong-say-no-drugs-and-smoke-0" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://s3sdghub.s3.eu-west-1.amazonaws.com/core-cms/public/styles/max_1920/public/1000023143.jpg?itok=686bDCLM" alt="One Tree, One Hope">
+                    </div>
+                    <div class="project-content">
+                        <h3>One Tree, One Hope, Let's Green The Glob</h3>
+                        <p>Tree planting initiative to promote environmental sustainability and combat climate change through community engagement and action.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Environment</span>
+                            <span class="project-tag">Sustainability</span>
+                        </div>
+                        <a href="https://sdgs.scout.org/project/one-tree-one-hope-lets-green-globe" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://s3sdghub.s3.eu-west-1.amazonaws.com/core-cms/public/styles/project_teaser/public/1000023222.jpg?h=88eebaca&itok=fZbx5mkP" alt="Plastic Free Future">
+                    </div>
+                    <div class="project-content">
+                        <h3>Be a Hero, Clean Up Zero</h3>
+                        <p>Cleanliness drive and awareness campaign against plastic pollution, promoting sustainable alternatives and responsible waste management.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Environment</span>
+                            <span class="project-tag">Cleanliness</span>
+                        </div>
+                        <a href="https://sdgs.scout.org/project/be-hero-clean-zero-plastic-free-future-key" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://s3sdghub.s3.eu-west-1.amazonaws.com/core-cms/public/styles/project_teaser/public/1000023150.jpg?h=ddc58dd3&itok=grVRoo-y" alt="Scouts on Duty">
+                    </div>
+                    <div class="project-content">
+                        <h3>Scouts on Duty, Traffic in Harmony</h3>
+                        <p>Traffic management volunteering initiative after July 24th uprising, ensuring smooth traffic flow and public safety in collaboration with authorities.</p>
+                        <div class="project-tags">
+                            <span class="project-tag">Volunteering</span>
+                            <span class="project-tag">Public Service</span>
+                        </div>
+                        <a href="https://sdgs.scout.org/project/scouts-duty-traffic-harmony" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Designed Websites Section -->
+    <section class="websites" id="websites">
+        <div class="container">
+            <h2>My Designed Websites</h2>
+            <div class="websites-container">
+                
+                <!-- Website 1 -->
+                <div class="website-card">
+                    <div class="website-preview">
+                        <div class="website-preview-frame">
+                            <div class="iframe-loading">
+                                <div class="spinner"></div>
+                                <p>Loading Blood Donor BD...</p>
+                            </div>
+                            <iframe 
+                                src="https://blood-donor-bd.github.io/Database/" 
+                                class="website-iframe"
+                                loading="lazy"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.previousElementSibling.innerHTML='<p>Failed to load preview</p>'"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="website-content">
+                        <h3>Blood Donor BD</h3>
+                        <p>A comprehensive platform connecting blood donors with recipients across Bangladesh. Features an interactive database, search functionality, and emergency contact system to facilitate life-saving connections during critical situations.</p>
+                        <a href="https://blood-donor-bd.github.io/Database/" class="website-link" target="_blank">
+                            Visit Website <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Website 2 -->
+                <div class="website-card">
+                    <div class="website-preview">
+                        <div class="website-preview-frame">
+                            <div class="iframe-loading">
+                                <div class="spinner"></div>
+                                <p>Loading Portfolio...</p>
+                            </div>
+                            <iframe 
+                                src="https://rovermdashfaq.github.io/portfolio/" 
+                                class="website-iframe"
+                                loading="lazy"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.previousElementSibling.innerHTML='<p>Failed to load preview</p>'"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="website-content">
+                        <h3>Personal Portfolio</h3>
+                        <p>A responsive portfolio website showcasing my journey as a Rover Scout and community leader. Built with HTML, CSS, and JavaScript, featuring smooth animations, project galleries, and interactive elements to engage visitors.</p>
+                        <a href="https://rovermdashfaq.github.io/portfolio/" class="website-link">
+                            Current Website <i class="fas fa-link"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Website 3 -->
+                <div class="website-card">
+                    <div class="website-preview">
+                        <div class="website-preview-frame">
+                            <div class="iframe-loading">
+                                <div class="spinner"></div>
+                                <p>Loading Scouting Activities...</p>
+                            </div>
+                            <iframe 
+                                src="https://rovermdashfaq.github.io/Base64/" 
+                                class="website-iframe"
+                                loading="lazy"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.previousElementSibling.innerHTML='<p>Failed to load preview</p>'"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="website-content">
+                        <h3>Base64 Image Converter</h3>
+                        <p>An online tool that converts images into Base64 data URLs. Users can upload an image and then copy or download its Base64 code. It’s useful for web development, embedding images in emails, or documentation.</p>
+                        <a href="https://rovermdashfaq.github.io/Base64/" class="website-link" target="_blank">
+                            View Activities <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Website 4 -->
+                <div class="website-card">
+                    <div class="website-preview">
+                        <div class="website-preview-frame">
+                            <div class="iframe-loading">
+                                <div class="spinner"></div>
+                                <p>Loading Youth Platform...</p>
+                            </div>
+                            <iframe 
+                                src="https://rovermdashfaq.github.io/sameweb/" 
+                                class="website-iframe"
+                                loading="lazy"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.previousElementSibling.innerHTML='<p>Failed to load preview</p>'"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="website-content">
+                        <h3>Website Cloner</h3>
+                        <p>This is a simple Website Cloner tool (for educational use) that lets you view and replicate a website’s HTML with a live preview.</p>
+                        <a href="https://rovermdashfaq.github.io/sameweb/" class="website-link">
+                            Explore Platform <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Website 5 -->
+                <div class="website-card">
+                    <div class="website-preview">
+                        <div class="website-preview-frame">
+                            <div class="iframe-loading">
+                                <div class="spinner"></div>
+                                <p>Loading Youth Platform...</p>
+                            </div>
+                            <iframe 
+                                src="https://gdgcrsg.github.io/anniversary/" 
+                                class="website-iframe"
+                                loading="lazy"
+                                onload="this.previousElementSibling.style.display='none'"
+                                onerror="this.previousElementSibling.innerHTML='<p>Failed to load preview</p>'"
+                            ></iframe>
+                        </div>
+                    </div>
+                    <div class="website-content">
+                        <h3>GDGCRSG 48th Anniversary</h3>
+                        <p>This is a dedicated page celebrating the 48th Anniversary of the Gurudayal Government College Rover Scout Group, marking 48 years of its journey since its inception in 1977.</p>
+                        <a href="https://gdgcrsg.github.io/anniversary/" class="website-link">
+                            Explore Platform <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+<!-- Achievements Section -->
+<section class="achievements" id="achievements">
+  <div class="container">
     <h2>Achievements</h2>
-    <ul>
-      <li>Promoted from Rover Squire to Rover Scout Member (2025)</li>
-      <li>Successfully Completed 26th Course for Rover Mate-2025 at Kishoreganj</li>
-      <li>Promoted from Rover Member to Rover Mate (17 July, 2025)</li>
-      <li>Gurudayal Govt. College Rover Scout Group Best Rover of the Award (2024–25)</li>
-      <li>Led multiple community service & disaster relief projects</li>
-      <li>Participated in the Regional Youth Forum-2025 and selected for National Youth Forum-2025</li>
-      <li>Successfully participated in National Youth Forum-2025 at National Scout Training Center, Mouchak, Gazipur, Bangladesh</li>
-    </ul>
-  </div>
-</section>
+    <div class="timeline">
+      
+      
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">28 August, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhDG7536seI59V8uuEmy5o76ATXk__yHLmEkxA7jLWIEpF5dKgXR7S47lwM1KAoIYjZvm3beLcQKqNCL6X0ldXliPb87QQw5vgq9rtWEQ_BTL17UFzTtYw1k7uEWEShxm-FPkLWtOND3tPWzgCXakUTQOafePS_NRQDcpJLm0uCWtZlPqsvllkT7hgk7GY/s2048/1000037315.jpg" alt="3rd Place – Speech Event, 35th Kishoreganj Rover Anniversary" class="achievement-img">
+          <h3>3rd Place – Speech Event, 35th Kishoreganj Rover Anniversary</h3>
+          <p>secured 3rd place in the Speech Event held during the 35th Anniversary Celebration of Kishoreganj District Rover Scouts. For this accomplishment, I was awarded a certificate and a prize, recognizing my participation and performance in the competition.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">2024-2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIq75a69u9q6WN7LUA8ob50EUwU3Rpg5P8ekjnk4ieVbA5nA5a1Ror55_0HXiTPZbuaQ7l0eidcosD5TBYXgmCREvniKDV4SqNbt1yHqWTUnBxYG_skeJPfIBK9Q35MhwAbq4jvh7YDKEIoV9xJF8Uocs_IP41rQRCo3MLODr80ugdN0KpIvdccvI5CgU/s3480/1000034154.jpg" alt="Best Rover Award" class="achievement-img">
+          <h3>Best Rover Award</h3>
+          <p>Received the Best Rover Award from Gurudayal Govt. College Rover Scout Group for outstanding contributions and leadership.</p>
+        </div>
+      </div>
 
-<section id="goals">
-  <div class="section-content">
-    <h2>Goals</h2>
-    <ul>
-      <li>Complete the Rover Scout Programme & earn the President’s Rover Award</li>
-      <li>Lead more national & international volunteer initiatives</li>
-      <li>Build digital tools that help my community in emergencies</li>
-    </ul>
-  </div>
-</section>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">17 July, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAtDT-_BMk3O8Qc4A80G0fjRzR-vQ3qvfXZKQl4aJi7ML1UQwyUc5zv-CmdOKGbu-L2ydypPG42LYDs7gdhTDFo1dzNAW36i5SOvoX8a0-tKRhTxbZv9jiI3FVWHw4M0SG_UZZz1sw21if_q9skEYXGdla6EMSSl2E6YmngjdSyaY6EO-_Sa3z7IsO1C4/s3288/1000040224.png" alt="Rover Mate" class="achievement-img">
+          <h3>Promoted to Rover Mate</h3>
+          <p>Successfully completed the 26th Course for Rover Mate-2025 and promoted from Rover Member to Rover Mate on 17 July 2025.</p>
+        </div>
+      </div>
 
-<section id="contact">
-  <div class="section-content" style="text-align:center;">
-    <h2>Contact</h2>
-    <p>📞 Phone: <a href="tel:+8801931853063" style="color:var(--main-color);text-decoration:none">+880 1931-853063</a></p>
-    <p>📧 Email: <a href="mailto:rovermdashfaq@gmail.com" style="color:var(--main-color);text-decoration:none">rovermdashfaq@gmail.com</a></p>
-    <p>📍 District: Kishoreganj, Bangladesh</p>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">5 May, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr8FmmtiXGUlGivPXMUCm5b6DnjEfrw6h55FxCB4ce_3PUrmqN9vtQsbMbj2zFVidP0vxWS_xFzamr-rTEkrVT8_pCqo89I6JXZV5HWwkldKbnyINDVNZdjN30U9hNsURk9ZOOdNCujU-QuEWXdAoGkSOSbOB9u0QBmmH1ECOMzpIJr04siOzKB_Elve0/s2048/1000032835.jpg" alt="National Youth Forum" class="achievement-img">
+          <h3>National Youth Forum Participation</h3>
+          <p>Successfully participated in the National Youth Forum-2025 held in Mouchak, Gazipur, Bangladesh.</p>
+        </div>
+      </div>
 
-    <p>Follow me for updates:</p>
-    <div class="social-icons" style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:12px;">
-      <a href="https://www.facebook.com/MD.Ashfaq01" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="Facebook" width="36" height="36"></a>
-      <a href="https://www.instagram.com/md.ashfaq01" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" width="36" height="36"></a>
-      <a href="https://www.tiktok.com/@mdashfaq.king?_t=ZS-8zQHzCpJy9H&_r=1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/3046/3046120.png" alt="TikTok" width="36" height="36"></a>
-      <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" width="36" height="36"></a>
-      <a href="https://wa.me/qr/3ITBKA5Y5SUSI1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" width="36" height="36"></a>
-      <a href="mailto:mdashfaqurrahmantanim@gmail.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" width="36" height="36"></a>
-      <a href="https://www.youtube.com/@md.ashfaq01" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174883.png" alt="YouTube" width="36" height="36"></a>
-      <a href="https://mdashfaqurrahmantanim.blogspot.com/2024/11/mdashfaq.com.html?m=1" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png" alt="Website" width="36" height="36"></a>
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">11 April, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiMN56SiR94EWF9W1x-YgoUHV5DrkyvHdFzhpjU_e7-LZkwC22uIcvM8KFFLH9Spsn_pekqPSHOOdUqCuo5oMyGtPcZESSfezbaoOZfTzVJ-4TJMZmRygBxOok5Zy_TOnClDWOfp9Ojdt4Zp94Eh9h0qV4oMvlrqQtgWWGUMS7ojcR5AsLSReZQrbnmrlU/s1194/1000030800.jpg" alt="Regional Youth Forum" class="achievement-img">
+          <h3>Regional Youth Forum Selection</h3>
+          <p>Participated in Regional Youth Forum-2025 and selected for National Youth Forum-2025.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">19 February, 2025 to 26 February, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhtWl3PGR-q5rlZ_fyJkj_2uFpenUkDoXzwRe8i1Gor2VOMOI_gHF-UuXIzF9qkL-XOgXt1lxARgfaJrwFmw9wH2t8VQxnWvRwx9DF2gN7N4nH8mYjjZMbnbuwRSM4uIFiCuzD3O8PYHsxGRmrGTMFLPL3rv5GUPVJWW86djqQ9v6Px0KO4OBnyPJ86TrY/s3480/1000030799.jpg" alt="Community Development Camp-2025 – Certificate Awarded" class="achievement-img">
+          <h3>Community Development Camp-2025 – Certificate Awarded</h3>
+          <p>Recognized with a certificate for actively participating in the Community Development Camp-2025, demonstrating commitment to social service and community growth.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">10 February, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFr-HoeZ1-t6Sfp3h6goq-NMG70RXK441e1vxd23dgo8TFUG_0lCyQIP6Vyo3S4i3tbhEAy6KWeKyZKYPKMfjnzP11CjSbqW-WjjpgBWd_dkg06yzNsCXC-91j51u46VeMlscwyKRud5vm2nWuEf9hcdu0n2wl2N0Vla5GcOJ8Mqbju5Mu8XirpaQkYFQ/s1242/1000040225.jpg" alt="Rover Scout Member" class="achievement-img">
+          <h3>Promoted to Rover Scout Member</h3>
+          <p>Successfully promoted from Rover Squire to Rover Scout Member in 10 February, 2025.</p>
+        </div>
+      </div>
+      
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">10 February, 2025</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgO2jblGdVaBpXhgjbjvonhdUPjK1nQ9LnGVCpft4QWUpvYMp6n4JInGqrxXo4SGL_BA3Ib4ceg0MR0bNvgpPHevYyflb6KZXixo6Bd29vlZzSvEuctEFMlTSy5hJ10_zhXiR9EMn7w1H8VgyAcs44PbGbBRFa721jcnjcn9nYlRbY4j3wMgu_4hQWZo6o/s2048/1000020085.jpg" alt="Rover Scout Investiture – First Place" class="achievement-img">
+          <h3>Rover Scout Investiture – First Place</h3>
+          <p>On 10 February 2025, I was officially invested as a Rover Scout. During the investiture evaluation at Gurudayal Government College Rover Scout Group, I proudly achieved first place, marking the beginning of my journey in leadership, service, and Scouting excellence</p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-content">
+          <div class="timeline-date">Ongoing</div>
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjXES9Ce4RNDEEfbdDm9OGcJ0UOhDJLLzQuusgiOgOpHgw4qyyr0kcA2-Y-QN0bo3OLYfoODQD8Gw1oKjl9qebDatgWk4HAk7adU_2dLLgxb7urgxp2uDoQeKWlb8bHjQ9QARp7WFE2jkuLG9im5my176mFin3VlSlFYH0Wmlqr2LMmc-jbG_28YDpNOCY/s2500/1000040227.jpg" alt="Community Leadership" class="achievement-img">
+          <h3>Community Leadership</h3>
+          <p>Led multiple community service and disaster relief projects, demonstrating commitment to social welfare and community development.</p>
+        </div>
+      </div>
+
+
+
     </div>
   </div>
 </section>
 
-<button id="topBtn" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>Feel free to reach out for collaborations, volunteer opportunities, or just to say hello!</p>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+880 1931-853063</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email</h4>
+                            <p>rovermdashfaq@gmail.com</p>
+                            <p>mdashfaqurrahmantanim@gmail.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>Location</h4>
+                            <p>Kishoreganj, Bangladesh</p>
+                        </div>
+                    </div>
+                    
+                    <div class="social-links">
+                        <a href="https://wa.me/qr/3ITBKA5Y5SUSI1" class="social-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.facebook.com/MD.Ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/md.ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@md.ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+  <form id="contactForm" action="https://formspree.io/f/mabcdxyz" method="POST">
+      <div class="form-group">
+          <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+      </div>
+      <div class="form-group">
+          <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+      </div>
+      <div class="form-group">
+          <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+      </div>
+      <div class="form-group">
+          <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
+      </div>
+      <button type="submit" class="btn">Send Message</button>
+  </form>
+</div>
 
-<footer>
-  &copy; 2025 Md. Ashfaqur Rahman Tanim
-</footer>
+            </div>
+        </div>
+    </section>
 
-<script>
-  // Hamburger toggle
-  const hamburger = document.getElementById('hamburgerBtn');
-  const mainNav = document.getElementById('mainNav');
-  hamburger.addEventListener('click',()=>{
-    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
-    hamburger.setAttribute('aria-expanded',!expanded);
-    mainNav.classList.toggle('open');
-  });
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">Md. Ashfaqur Rahman Tanim</div>
+                    <p>Rover Mate at Gurudayal Government College Rover Scout Group (Unit-3)</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/MD.Ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/md.ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" class="social-link" target="_blank">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://www.youtube.com/@md.ashfaq01" class="social-link" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#skills">Skills</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                        <li><a href="#websites">Websites</a></li>
+                        <li><a href="#achievements">Achievements</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +880 1931-853063</li>
+                        <li><i class="fas fa-envelope"></i> rovermdashfaq@gmail.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Kishoreganj, Bangladesh</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 Md. Ashfaqur Rahman Tanim. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-  // Close menu on outside click
-  document.addEventListener('click', e=>{
-    if(!mainNav.contains(e.target) && !hamburger.contains(e.target)){
-      mainNav.classList.remove('open');
-      hamburger.setAttribute('aria-expanded','false');
-    }
-  });
+    <script>
+        // Loading screen
+        window.addEventListener('load', function() {
+            const loading = document.getElementById('loading');
+            setTimeout(() => {
+                loading.classList.add('hidden');
+            }, 0);
+        });
 
-  // Back to top
-  const topBtn = document.getElementById('topBtn');
-  window.onscroll = ()=>{
-    if(document.body.scrollTop > 200 || document.documentElement.scrollTop > 200){
-      topBtn.style.display='flex';
-    }else topBtn.style.display='none';
-  };
-  topBtn.addEventListener('click',()=>{window.scrollTo({top:0,behavior:'smooth'})});
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            const scrollTop = document.getElementById('scrollTop');
+            
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
+            } else {
+                header.classList.remove('header-scrolled');
+            }
+            
+            if (window.scrollY > 500) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
+        });
 
-  // Typing effect
-  const texts = ["Student","Rover Scout","Youth Leader","Volunteer"];
-  let count = 0, index=0, currentText="", letter="";
-  (function type(){
-    if(count === texts.length) count=0;
-    currentText = texts[count];
-    letter = currentText.slice(0,++index);
-    document.getElementById('typing').textContent = letter;
-    if(letter.length === currentText.length){ setTimeout(()=>{index=0;count++;type()},1200); } 
-    else setTimeout(type, 120);
-  }());
-</script>
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Scroll to top functionality
+        const scrollTop = document.getElementById('scrollTop');
+        scrollTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function() {
+            const elements = document.querySelectorAll('.skill-card, .project-card, .timeline-item, .website-card');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+                
+                if (elementPosition < screenPosition) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animated elements
+        window.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.skill-card, .project-card, .timeline-item, .website-card');
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(20px)';
+                element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Trigger once on load
+        });
+
+        // Lazy load iframes when they come into view
+        const lazyLoadIframes = function() {
+            const iframes = document.querySelectorAll('.website-iframe');
+            
+            iframes.forEach(iframe => {
+                const iframePosition = iframe.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight;
+                
+                if (iframePosition < screenPosition && !iframe.src) {
+                    iframe.src = iframe.dataset.src;
+                }
+            });
+        };
+
+        // Initialize lazy loading
+        window.addEventListener('scroll', lazyLoadIframes);
+        window.addEventListener('load', lazyLoadIframes);
+    </script>
 </body>
-                        </html>
+</html>
