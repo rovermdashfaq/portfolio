@@ -218,15 +218,14 @@
 
         /* Hero Section */
         .hero {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(126, 34, 206, 0.15) 100%);
-}
-
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.15) 0%, rgba(126, 34, 206, 0.15) 100%);
+        }
 
         .hero-content {
             width: 60%;
@@ -283,23 +282,22 @@
         }
 
         .about-image {
-    flex: 1;
-    border-radius: 50%;
-    overflow: hidden;
-    box-shadow: var(--shadow);
-    border: 3px solid blue;
-    padding: 2px;
-    display: inline-block;
-}
+            flex: 1;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 3px solid blue;
+            padding: 2px;
+            display: inline-block;
+        }
 
-.about-image img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 50%; /* ছবিও গোল থাকবে */
-}
-.about-image:hover {transform: scale(1.1);}
-
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 50%; /* ছবিও গোল থাকবে */
+        }
+        .about-image:hover {transform: scale(1.1);}
 
         .about-text {
             flex: 1;
@@ -327,109 +325,604 @@
             font-size: 1.2rem;
         }
 
-        /* Skills Section */
-        .skills {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(126, 34, 206, 0.05) 100%);
-        }
+/* Enhanced Skills Section */
+.skills {
+    background: linear-gradient(135deg, 
+        rgba(37, 99, 235, 0.05) 0%, 
+        rgba(126, 34, 206, 0.05) 25%,
+        rgba(220, 38, 38, 0.05) 50%,
+        rgba(34, 197, 94, 0.05) 75%,
+        rgba(234, 179, 8, 0.05) 100%);
+    position: relative;
+    overflow: hidden;
+}
 
-        .skills-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+/* Animated background elements */
+.skills::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, 
+        rgba(37, 99, 235, 0.1) 0%, 
+        rgba(126, 34, 206, 0.1) 25%, 
+        transparent 70%);
+    animation: floatBackground 20s ease-in-out infinite;
+    z-index: 0;
+}
 
-        .skill-card {
-            background: white;
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
+.skills::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(34, 197, 94, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(234, 179, 8, 0.05) 0%, transparent 50%);
+    z-index: 0;
+}
 
-        .skill-card:hover {
-            transform: translateY(-10px);
-        }
+.skills-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
 
-        .skill-card i {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
+.skill-card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: var(--radius);
+    box-shadow: 
+        var(--shadow),
+        0 8px 32px rgba(31, 38, 135, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+}
 
-        .skill-card h3 {
-            margin-bottom: 15px;
-        }
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+    transition: left 0.6s;
+}
 
-        /* Projects Section */
-        .projects {
-            background-color: white;
-        }
+.skill-card:hover::before {
+    left: 100%;
+}
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-        }
+.skill-card:hover {
+    transform: 
+        translateY(-15px) 
+        scale(1.02) 
+        rotateX(5deg);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.15),
+        0 0 80px rgba(37, 99, 235, 0.1),
+        inset 0 0 60px rgba(255, 255, 255, 0.8);
+}
 
-        .project-card {
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            background: white;
-        }
+.skill-card i {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--primary);
+    transition: all 0.4s ease;
+    display: inline-block;
+}
 
-        .project-card:hover {
-            transform: translateY(-10px);
-        }
+.skill-card:hover i {
+    transform: 
+        scale(1.2) 
+        rotateY(360deg);
+    color: transparent;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(37, 99, 235, 0.3);
+}
 
-        .project-image {
-            height: 200px;
-            overflow: hidden;
-        }
+.skill-card h3 {
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+}
 
-        .project-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
+.skill-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    transition: width 0.4s ease;
+}
 
-        .project-card:hover .project-image img {
-            transform: scale(1.1);
-        }
+.skill-card:hover h3::after {
+    width: 100%;
+}
 
-        .project-content {
-            padding: 20px;
-        }
+/* Skill progress animation */
+.skill-progress {
+    height: 6px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+}
 
-        .project-content h3 {
-            margin-bottom: 10px;
-        }
+.skill-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 3px;
+    width: 0;
+    transition: width 1.5s cubic-bezier(0.22, 0.61, 0.36, 1);
+    position: relative;
+}
 
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 15px 0;
-        }
+.skill-progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.6), 
+        transparent);
+    animation: shimmer 2s infinite;
+}
 
-        .project-tag {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-            padding: 5px 10px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
+/* Skill level indicator */
+.skill-level {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #666;
+}
 
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--primary);
-            font-weight: 600;
-        }
+/* Particle effect on hover */
+.skill-card .particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--primary);
+    border-radius: 50%;
+    opacity: 0;
+}
+
+/* 3D Flip Card Variant */
+.skill-card.flip {
+    perspective: 1000px;
+}
+
+.skill-card.flip .card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.skill-card.flip:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.skill-card.flip .card-front,
+.skill-card.flip .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 30px;
+    border-radius: var(--radius);
+}
+
+.skill-card.flip .card-back {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Magic sparkle effect */
+@keyframes sparkle {
+    0%, 100% { 
+        transform: scale(0) rotate(0deg); 
+        opacity: 0; 
+    }
+    50% { 
+        transform: scale(1) rotate(180deg); 
+        opacity: 1; 
+    }
+}
+
+.sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.sparkle::before, .sparkle::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, 
+        rgba(255,255,255,0.8) 0%, 
+        transparent 70%);
+    animation: sparkle 1s ease-out;
+}
+
+/* Animations */
+@keyframes floatBackground {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-2%, 2%) rotate(1deg); }
+    66% { transform: translate(2%, -2%) rotate(-1deg); }
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(400%); }
+}
+
+@keyframes particleBurst {
+    0% { 
+        transform: translate(0, 0) scale(0); 
+        opacity: 1; 
+    }
+    100% { 
+        transform: translate(var(--tx), var(--ty)) scale(1); 
+        opacity: 0; 
+    }
+}
+
+/* Staggered animation for cards */
+.skill-card {
+    opacity: 0;
+    transform: translateY(50px);
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.skill-card:nth-child(1) { animation-delay: 0.1s; }
+.skill-card:nth-child(2) { animation-delay: 0.2s; }
+.skill-card:nth-child(3) { animation-delay: 0.3s; }
+.skill-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive enhancements */
+@media (max-width: 768px) {
+    .skill-card:hover {
+        transform: translateY(-8px) scale(1.01);
+    }
+    
+    .skills-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+}
+
+/* Projects Section */
+.projects {
+    background-color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated background elements */
+.projects::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+    animation: floatBackground 20s ease-in-out infinite;
+}
+
+@keyframes floatBackground {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-30px, -30px) rotate(120deg); }
+    66% { transform: translate(30px, 30px) rotate(240deg); }
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 30px;
+    position: relative;
+    z-index: 1;
+}
+
+.project-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    background: white;
+    position: relative;
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+    animation: cardEntrance 0.8s ease-out forwards;
+}
+
+.project-card:nth-child(1) { animation-delay: 0.1s; }
+.project-card:nth-child(2) { animation-delay: 0.2s; }
+.project-card:nth-child(3) { animation-delay: 0.3s; }
+.project-card:nth-child(4) { animation-delay: 0.4s; }
+.project-card:nth-child(5) { animation-delay: 0.5s; }
+.project-card:nth-child(6) { animation-delay: 0.6s; }
+
+@keyframes cardEntrance {
+    0% {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    70% {
+        opacity: 0.8;
+        transform: translateY(-10px) scale(1.02);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.project-card:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 
+        0 25px 50px -12px rgba(37, 99, 235, 0.25),
+        0 0 30px rgba(37, 99, 235, 0.1);
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(37, 99, 235, 0.1),
+        transparent
+    );
+    transition: left 0.6s ease;
+    z-index: 2;
+}
+
+.project-card:hover::before {
+    left: 100%;
+}
+
+.project-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        rgba(37, 99, 235, 0.2),
+        transparent 50%
+    );
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.project-card:hover .project-image::after {
+    opacity: 1;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    filter: brightness(0.95);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.15) rotate(1deg);
+    filter: brightness(1.05);
+}
+
+.project-content {
+    padding: 25px;
+    position: relative;
+    background: white;
+}
+
+.project-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), #60a5fa);
+    transition: width 0.6s ease;
+}
+
+.project-card:hover .project-content::before {
+    width: 100%;
+}
+
+.project-content h3 {
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.project-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.4s ease;
+}
+
+.project-card:hover .project-content h3::after {
+    width: 100%;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0;
+}
+
+.project-tag {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary);
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    transform: translateX(-10px);
+    opacity: 0;
+    animation: tagSlideIn 0.5s ease forwards;
+}
+
+.project-tag:nth-child(1) { animation-delay: 0.4s; }
+.project-tag:nth-child(2) { animation-delay: 0.5s; }
+.project-tag:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes tagSlideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.project-tag:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.3);
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--primary);
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 25px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    overflow: hidden;
+}
+
+.project-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.project-link:hover::before {
+    left: 100%;
+}
+
+.project-link:hover {
+    background: rgba(37, 99, 235, 0.1);
+    transform: translateX(10px);
+    gap: 12px;
+}
+
+.project-link i {
+    transition: transform 0.3s ease;
+}
+
+.project-link:hover i {
+    transform: translateX(5px) scale(1.2);
+}
+
+/* Pulse animation for featured projects */
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(37, 99, 235, 0.6);
+    }
+}
+
+.project-card.featured {
+    animation: pulseGlow 3s ease-in-out infinite, cardEntrance 0.8s ease-out forwards;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .project-card {
+        transform: translateY(30px) scale(0.95);
+    }
+}
 
         /* Websites Section */
         .websites {
@@ -566,14 +1059,14 @@
             margin: 0 auto;
         }
         .timeline-content img.achievement-img {
-    width: 100%;
-    max-width: 280px; /* ছবির সর্বোচ্চ সাইজ */
-    border-radius: 12px; /* কার্ডের স্টাইলের সাথে মিল */
-    margin: 10px 0 15px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* নরম শ্যাডো */
-    display: block;
-}
-.achievement-img:hover {transform: scale(1.2);}
+            width: 100%;
+            max-width: 280px; /* ছবির সর্বোচ্চ সাইজ */
+            border-radius: 12px; /* কার্ডের স্টাইলের সাথে মিল */
+            margin: 10px 0 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* নরম শ্যাডো */
+            display: block;
+        }
+        .achievement-img:hover {transform: scale(1.2);}
 
         .timeline:before {
             content: '';
@@ -691,6 +1184,34 @@
             resize: vertical;
         }
 
+        /* Contact Form Success/Error Messages */
+        .form-message {
+            margin-top: 15px;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+        
+        .form-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .form-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
         /* Footer */
         footer {
             background: var(--dark);
@@ -705,7 +1226,7 @@
         }
 
         .footer-logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 20px;
         }
@@ -974,6 +1495,48 @@
             </div>
             <div class="hero-content">
                 <h1>Md. Ashfaqur Rahman Tanim</h1>
+                
+                <div id="digital-clock" style="
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: -45px;
+  color: transparent;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  padding: 8px 16px;
+  display: inline-block;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  letter-spacing: 1.5px;
+"></div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    
+    // বাংলাদেশ সময় (UTC+6)
+    const bangladeshOffset = 6 * 60; // minutes
+    const localOffset = now.getTimezoneOffset();
+    const bangladeshTime = new Date(now.getTime() + (localOffset + bangladeshOffset) * 60000);
+    
+    let hours = bangladeshTime.getHours();
+    const minutes = String(bangladeshTime.getMinutes()).padStart(2, '0');
+    const seconds = String(bangladeshTime.getSeconds()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    // ১২ ঘন্টা ফরমেটে কনভার্ট
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 হলে 12 বসাবে
+    
+    document.getElementById('digital-clock').textContent = 
+      `${hours}:${minutes}:${seconds} ${ampm} (BDT)`;
+  }
+  
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>
+                
                 <p>Student, Rover Scout, Youth Leader & Volunteer dedicated to community service and creating positive change.</p>
                 <div class="hero-btns">
                     <a href="#contact" class="btn">Get In Touch</a>
@@ -985,6 +1548,10 @@
     <a href="#achievements" class="btn btn-outline">Achievements</a>
     <a href="#websites" class="btn btn-outline">Websites</a>
 </div>
+<div class="hero-btns" style="margin-top: 15px; display: flex; gap: 10px;">
+    <a href="#contactForm" class="btn btn-outline">Send Massage</a>
+     <a href="#about" class="btn btn-outline">Short Bio</a>
+    </div>
 
 
             </div>
@@ -1027,11 +1594,11 @@
                         </div>
                         <div class="info-item">
                             <i class="fas fa-envelope"></i>
-                            <span>rovermdashfaq@gmail.com</span>
+                            <span>mdashfaqurrahmantanim@gmail.com</span>
                         </div>
                     </div>
                     
-                    <p>My journey in scouting has shaped my leadership skills and commitment to serving others. I've led various community initiatives and participated in national youth forums to contribute to positive social change.</p>
+                    <p>My journey in Scouting has been a transformative experience that has strengthened my leadership skills and deepened my commitment to serving others. I have led community service projects that created real impact and participated in national youth forums where I contributed to meaningful discussions on positive social change. These experiences have not only shaped my character but also inspired me to continue working for the betterment of society.</p>
                     
                     <a href="#contact" class="btn">Contact Me</a>
                 </div>
@@ -1420,9 +1987,10 @@
                             <i class="fas fa-phone"></i>
                         </div>
                         <div>
-                            <h4>Phone</h4>
-                            <p>+880 1931-853063</p>
-                        </div>
+    <h4>Phone</h4>
+    <p><a href="tel:+8801612018221">+8801612018221</a></p>
+</div>
+
                     </div>
                     
                     <div class="contact-item">
@@ -1430,10 +1998,11 @@
                             <i class="fas fa-envelope"></i>
                         </div>
                         <div>
-                            <h4>Email</h4>
-                            <p>rovermdashfaq@gmail.com</p>
-                            <p>mdashfaqurrahmantanim@gmail.com</p>
-                        </div>
+    <h4>Email</h4>
+    <p><a href="mailto:rovermdashfaq@gmail.com">rovermdashfaq@gmail.com</a></p>
+    <p><a href="mailto:mdashfaqurrahmantanim@gmail.com">mdashfaqurrahmantanim@gmail.com</a></p>
+</div>
+
                     </div>
                     
                     <div class="contact-item">
@@ -1442,7 +2011,7 @@
                         </div>
                         <div>
                             <h4>Location</h4>
-                            <p>Kishoreganj, Bangladesh</p>
+                            <p><a href="https://maps.app.goo.gl/gdGRsVEwnSkUSUyW6">Kishoreganj, Bangladesh</a></p>
                         </div>
                     </div>
                     
@@ -1466,29 +2035,36 @@
                 </div>
                 
                 <div class="contact-form">
-  <form id="contactForm" action="https://formspree.io/f/mvgwrdpb" method="POST">
-    <div class="form-group">
-      <input type="text" name="name" class="form-control" placeholder="Your Name" required>
-    </div>
-    <div class="form-group">
-      <input type="email" name="email" class="form-control" placeholder="Your Email" required>
-    </div>
-    <div class="form-group">
-      <input type="text" name="subject" class="form-control" placeholder="Subject" required>
-    </div>
-    <div class="form-group">
-      <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
-    </div>
+                    <h3>Send Message</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Your Name" required>
+                        </div>
 
-    <!-- Optional: Formspree কে জানান সাবমিটের বিষয় ও রিডাইরেক্ট পৃষ্ঠা -->
-    <input type="hidden" name="_subject" value="New message from website">
-    <input type="hidden" name="_next" value="https://yourwebsite.com/thankyou.html">
+                        <div class="form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Your Email" required>
+                        </div>
 
-    <button type="submit" class="btn">Send Message</button>
-  </form>
-</div>
+                        <div class="form-group">
+                            <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                        </div>
 
+                        <div class="form-group">
+                            <textarea name="message" class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
 
+                        <!-- Success and Error Messages -->
+                        <div id="successMessage" class="form-message form-success">
+                            Thank you! Your message was sent successfully, and I’ll be in touch with you soon.
+                        </div>
+
+                        <div id="errorMessage" class="form-message form-error">
+                            Sorry, your message could not be sent. Please try again.
+                        </div>
+
+                        <button type="submit" class="btn" id="submitBtn">Send Message</button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1531,9 +2107,9 @@
                 <div class="footer-column">
                     <h4>Contact Info</h4>
                     <ul>
-                        <li><i class="fas fa-phone"></i> +880 1931-853063</li>
-                        <li><i class="fas fa-envelope"></i> rovermdashfaq@gmail.com</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Kishoreganj, Bangladesh</li>
+                        <li><i class="fas fa-phone"></i> <a href="tel:+8801612018221">+880 1612-018221</a></li>
+                        <li><i class="fas fa-envelope"></i><a href="mailto:mdashfaqurrahmantanim@gmail.com"> mdashfaqurrahmantanim@gmail.com</a></li>
+                        <li><i class="fas fa-map-marker-alt"></i><a href="https://goo.gl/maps/BKgu9WPnNwNqWfZXA"> Banduldiya, Taljanga, Tarail, Kishoreganj, Dhaka,  Bangladesh</a></li>
                     </ul>
                 </div>
             </div>
@@ -1597,12 +2173,57 @@
             });
         });
 
-        // Form submission
+        // Contact Form Submission with AJAX
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // বাটন ডিজেবল করুন
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Sending...';
+            
+            // আগের মেসেজ লুকান
+            successMessage.style.display = 'none';
+            errorMessage.style.display = 'none';
+            
+            // FormData তৈরি করুন
+            const formData = new FormData(this);
+            
+            // Formspree URL যোগ করুন
+            formData.append('_subject', 'New Message from Portfolio Contact Form');
+            
+            // AJAX রিকোয়েস্ট
+            fetch('https://formspree.io/f/mvgwrdpb', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // সফল হলে
+                    successMessage.style.display = 'block';
+                    this.reset(); // ফর্ম রিসেট করুন
+                } else {
+                    // এরর হলে
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .catch(error => {
+                // এরর হলে
+                errorMessage.style.display = 'block';
+                console.error('Error:', error);
+            })
+            .finally(() => {
+                // বাটন আবার সক্রিয় করুন
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Send Message';
+            });
         });
 
         // Smooth scrolling for navigation links
@@ -1650,6 +2271,174 @@
             window.addEventListener('scroll', animateOnScroll);
             animateOnScroll(); // Trigger once on load
         });
+        
+        // Skills section interactive functions
+class SkillsAnimator {
+    constructor() {
+        this.skillCards = document.querySelectorAll('.skill-card');
+        this.init();
+    }
+
+    init() {
+        this.createParticleSystems();
+        this.animateSkillBars();
+        this.addHoverEffects();
+        this.addClickEffects();
+    }
+
+    createParticleSystems() {
+        this.skillCards.forEach(card => {
+            const particlesContainer = document.createElement('div');
+            particlesContainer.className = 'particles';
+            card.appendChild(particlesContainer);
+        });
+    }
+
+    animateSkillBars() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressBar = entry.target.querySelector('.skill-progress-bar');
+                    const targetWidth = progressBar.getAttribute('data-width') || '80%';
+                    progressBar.style.width = targetWidth;
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.skill-progress-bar').forEach(bar => {
+            observer.observe(bar.parentElement);
+        });
+    }
+
+    addHoverEffects() {
+        this.skillCards.forEach(card => {
+            card.addEventListener('mouseenter', (e) => {
+                this.createParticleBurst(e, card);
+                this.createSparkleEffect(e, card);
+            });
+
+            card.addEventListener('mousemove', (e) => {
+                this.createParallaxEffect(e, card);
+            });
+        });
+    }
+
+    addClickEffects() {
+        this.skillCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                this.createRippleEffect(e, card);
+                this.animateCardPress(card);
+            });
+        });
+    }
+
+    createParticleBurst(event, card) {
+        const particlesContainer = card.querySelector('.particles');
+        const rect = card.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        for (let i = 0; i < 12; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const angle = Math.random() * Math.PI * 2;
+            const distance = 50 + Math.random() * 100;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            
+            // Random color based on card theme
+            const colors = ['#2563eb', '#7e22ce', '#dc2626', '#16a34a', '#eab308'];
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            particle.style.animation = `particleBurst 0.8s ease-out forwards`;
+            
+            particlesContainer.appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 800);
+        }
+    }
+
+    createSparkleEffect(event, card) {
+        const sparkle = document.createElement('div');
+        sparkle.className = 'sparkle';
+        sparkle.style.left = `${event.clientX - card.getBoundingClientRect().left}px`;
+        sparkle.style.top = `${event.clientY - card.getBoundingClientRect().top}px`;
+        
+        card.appendChild(sparkle);
+        
+        setTimeout(() => {
+            sparkle.remove();
+        }, 1000);
+    }
+
+    createParallaxEffect(event, card) {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        
+        const tiltX = (y - 0.5) * 10;
+        const tiltY = (x - 0.5) * -10;
+        
+        card.style.transform = `
+            translateY(-15px) 
+            scale(1.02) 
+            rotateX(${tiltX}deg) 
+            rotateY(${tiltY}deg)
+        `;
+    }
+
+    createRippleEffect(event, card) {
+        const ripple = document.createElement('div');
+        ripple.style.position = 'absolute';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.animation = 'ripple 0.6s linear';
+        
+        const rect = card.getBoundingClientRect();
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.width = ripple.style.height = `${size}px`;
+        ripple.style.left = `${event.clientX - rect.left - size/2}px`;
+        ripple.style.top = `${event.clientY - rect.top - size/2}px`;
+        
+        card.style.position = 'relative';
+        card.appendChild(ripple);
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+
+    animateCardPress(card) {
+        card.style.transform = 'translateY(-12px) scale(0.98)';
+        setTimeout(() => {
+            card.style.transform = 'translateY(-15px) scale(1.02)';
+        }, 150);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new SkillsAnimator();
+});
+
+// Add ripple animation to CSS
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes ripple {
+        to {
+            transform: scale(4);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(style);
 
         // Lazy load iframes when they come into view
         const lazyLoadIframes = function() {
