@@ -5,6 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Md. Ashfaqur Rahman Tanim | Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Md. Ashfaqur Rahman Tanim | Portfolio">
+    <meta name="description" content="Official Portfolio of Md. Ashfaqur Rahman Tanim - Student, Rover Scout, Youth Leader & Volunteer dedicated to community service and creating positive change.">
+    <meta name="keywords" content="Md. Ashfaqur Rahman Tanim, Ashfaqur Rahman Tanim, Tanim, Portfolio, Rover Scout, Youth Leader, Volunteer, Community Service, Bangladesh, Kishoreganj, Web Developer, Blogger, Gurudayal Government College">
+    <meta name="author" content="Md. Ashfaqur Rahman Tanim">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rovermdashfaq.github.io/portfolio/">
+    <meta property="og:title" content="Md. Ashfaqur Rahman Tanim | Portfolio">
+    <meta property="og:description" content="Official Portfolio of Md. Ashfaqur Rahman Tanim - Student, Rover Scout, Youth Leader & Volunteer dedicated to community service and creating positive change.">
+    <meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCDeXufBywGlGcvjFv5OaZNnGnIFboYZgUyo9NPcDt7SH5dWhG6Kv7wOtGMm5uBfA-2RCI41U0IWscQhEPQ9_6mHg192N68FaFDDE4HIfb8zXw6Ubafj329ToS6mYTqHo8Wu8aRidwjczDQZ4Id_t7K-E32b8ZthoHTIH3r86pWwfOmFdNvgcQOOeHBDc/s2000/1000038033.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://rovermdashfaq.github.io/portfolio/">
+    <meta property="twitter:title" content="Md. Ashfaqur Rahman Tanim | Portfolio">
+    <meta property="twitter:description" content="Official Portfolio of Md. Ashfaqur Rahman Tanim - Student, Rover Scout, Youth Leader & Volunteer dedicated to community service and creating positive change.">
+    <meta property="twitter:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCDeXufBywGlGcvjFv5OaZNnGnIFboYZgUyo9NPcDt3SH5dWhG6Kv7wOtGMm5uBfA-2RCI41U0IWscQhEPQ9_6mHg192N68FaFDDE4HIfb8zXw6Ubafj329ToS6mYTqHo8Wu8aRidwjczDQZ4Id_t7K-E32b8ZthoHTIH3r86pWwfOmFdNvgcQOOeHBDc/s2000/1000038033.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCDeXufBywGlGcvjFv5OaZNnGnIFboYZgUyo9NPcDt3SH5dWhG6Kv7wOtGMm5uBfA-2RCI41U0IWscQhEPQ9_6mHg192N68FaFDDE4HIfb8zXw6Ubafj329ToS6mYTqHo8Wu8aRidwjczDQZ4Id_t7K-E32b8ZthoHTIH3r86pWwfOmFdNvgcQOOeHBDc/s2000/1000038033.png">
+    
     <style>
         /* CSS Variables */
         :root {
@@ -37,6 +61,8 @@
             color: var(--dark);
             line-height: 1.6;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .container {
@@ -306,9 +332,10 @@
             border-radius: 50%;
             overflow: hidden;
             box-shadow: var(--shadow);
-            border: 3px solid blue;
+            border: 3px solid var(--primary);
             padding: 2px;
             display: inline-block;
+            transition: var(--transition);
         }
 
         .about-image img {
@@ -317,7 +344,7 @@
             display: block;
             border-radius: 50%;
         }
-        .about-image:hover {transform: scale(1.1);}
+        .about-image:hover {transform: scale(1.05);}
 
         .about-text {
             flex: 1;
@@ -369,7 +396,7 @@
                 rgba(37, 99, 235, 0.1) 0%, 
                 rgba(126, 34, 206, 0.1) 25%, 
                 transparent 70%);
-            animation: floatBackground 20s ease-in-out infinite;
+            animation: floatBackgroundSkills 20s ease-in-out infinite;
             z-index: 0;
         }
 
@@ -609,7 +636,7 @@
         }
 
         /* Animations */
-        @keyframes floatBackground {
+        @keyframes floatBackgroundSkills {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(-2%, 2%) rotate(1deg); }
             66% { transform: translate(2%, -2%) rotate(-1deg); }
@@ -642,6 +669,9 @@
         .skill-card:nth-child(2) { animation-delay: 0.2s; }
         .skill-card:nth-child(3) { animation-delay: 0.3s; }
         .skill-card:nth-child(4) { animation-delay: 0.4s; }
+        .skill-card:nth-child(5) { animation-delay: 0.5s; }
+        .skill-card:nth-child(6) { animation-delay: 0.6s; }
+
 
         @keyframes fadeInUp {
             to {
@@ -678,10 +708,10 @@
             width: 200%;
             height: 200%;
             background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
-            animation: floatBackground 20s ease-in-out infinite;
+            animation: floatBackgroundProjects 20s ease-in-out infinite;
         }
 
-        @keyframes floatBackground {
+        @keyframes floatBackgroundProjects {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
             33% { transform: translate(-30px, -30px) rotate(120deg); }
             66% { transform: translate(30px, 30px) rotate(240deg); }
@@ -1085,8 +1115,9 @@
             margin: 10px 0 15px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             display: block;
+            transition: var(--transition);
         }
-        .achievement-img:hover {transform: scale(1.2);}
+        .achievement-img:hover {transform: scale(1.05);}
 
         .timeline:before {
             content: '';
@@ -1230,6 +1261,7 @@
             background: #95a5a6;
             cursor: not-allowed;
             transform: none !important;
+            box-shadow: none !important;
         }
 
         /* Footer */
@@ -1277,6 +1309,10 @@
 
         .footer-column ul li {
             margin-bottom: 10px;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .footer-column ul li a:hover {
@@ -2249,21 +2285,21 @@
             const successMessage = document.getElementById('successMessage');
             const errorMessage = document.getElementById('errorMessage');
             
-            // বাটন ডিজেবল করুন
+            // Disable button
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sending...';
             
-            // আগের মেসেজ লুকান
+            // Hide previous messages
             successMessage.style.display = 'none';
             errorMessage.style.display = 'none';
             
-            // FormData তৈরি করুন
+            // Create FormData
             const formData = new FormData(this);
             
-            // Formspree URL যোগ করুন
+            // Add Formspree subject
             formData.append('_subject', 'New Message from Portfolio Contact Form');
             
-            // AJAX রিকোয়েস্ট
+            // AJAX request
             fetch('https://formspree.io/f/mvgwrdpb', {
                 method: 'POST',
                 body: formData,
@@ -2273,21 +2309,21 @@
             })
             .then(response => {
                 if (response.ok) {
-                    // সফল হলে
+                    // On success
                     successMessage.style.display = 'block';
-                    this.reset(); // ফর্ম রিসেট করুন
+                    this.reset(); // Reset form
                 } else {
-                    // এরর হলে
+                    // On error
                     throw new Error('Network response was not ok');
                 }
             })
             .catch(error => {
-                // এরর হলে
+                // On error
                 errorMessage.style.display = 'block';
                 console.error('Error:', error);
             })
             .finally(() => {
-                // বাটন আবার সক্রিয় করুন
+                // Re-enable button
                 submitBtn.disabled = false;
                 submitBtn.textContent = 'Send Message';
             });
@@ -2343,7 +2379,7 @@
         function updateClock() {
             const now = new Date();
             
-            // বাংলাদেশ সময় (UTC+6)
+            // Bangladesh Time (UTC+6)
             const bangladeshOffset = 6 * 60; // minutes
             const localOffset = now.getTimezoneOffset();
             const bangladeshTime = new Date(now.getTime() + (localOffset + bangladeshOffset) * 60000);
@@ -2353,9 +2389,9 @@
             const seconds = String(bangladeshTime.getSeconds()).padStart(2, '0');
             const ampm = hours >= 12 ? 'PM' : 'AM';
             
-            // ১২ ঘন্টা ফরমেটে কনভার্ট
+            // Convert to 12-hour format
             hours = hours % 12;
-            hours = hours ? hours : 12; // 0 হলে 12 বসাবে
+            hours = hours ? hours : 12; // The hour '0' should be '12'
             
             document.getElementById('digital-clock').textContent = 
                 `${hours}:${minutes}:${seconds} ${ampm} (BDT)`;
@@ -2391,14 +2427,16 @@
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             const progressBar = entry.target.querySelector('.skill-progress-bar');
-                            const targetWidth = progressBar.getAttribute('data-width') || '80%';
-                            progressBar.style.width = targetWidth;
+                            if (progressBar) { // Ensure progressBar exists
+                                const targetWidth = progressBar.getAttribute('data-width') || '80%';
+                                progressBar.style.width = targetWidth;
+                            }
                         }
                     });
                 }, { threshold: 0.5 });
 
-                document.querySelectorAll('.skill-progress-bar').forEach(bar => {
-                    observer.observe(bar.parentElement);
+                document.querySelectorAll('.skill-progress').forEach(progressContainer => {
+                    observer.observe(progressContainer);
                 });
             }
 
@@ -2411,6 +2449,10 @@
 
                     card.addEventListener('mousemove', (e) => {
                         this.createParallaxEffect(e, card);
+                    });
+                    
+                    card.addEventListener('mouseleave', (e) => {
+                         card.style.transform = 'translateY(0) scale(1) rotateX(0deg) rotateY(0deg)'; // Reset transform
                     });
                 });
             }
@@ -2426,6 +2468,8 @@
 
             createParticleBurst(event, card) {
                 const particlesContainer = card.querySelector('.particles');
+                if (!particlesContainer) return; // Ensure container exists
+
                 const rect = card.getBoundingClientRect();
                 const x = event.clientX - rect.left;
                 const y = event.clientY - rect.top;
@@ -2540,8 +2584,9 @@
                 const iframePosition = iframe.getBoundingClientRect().top;
                 const screenPosition = window.innerHeight;
                 
+                // Only load iframes that have not been loaded and are in view
                 if (iframePosition < screenPosition && !iframe.src) {
-                    iframe.src = iframe.dataset.src;
+                    iframe.src = iframe.getAttribute('data-src') || iframe.src; // Use data-src for initial empty src
                 }
             });
         };
