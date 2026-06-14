@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin Panel | Md. Ashfaqur Rahman Tanim</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            color: var(--dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--dark) 0%, #0f172a 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.5rem;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sidebar-user {
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .sidebar-nav { padding: 20px 0; }
+
+        .nav-item {
+            padding: 14px 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            text-decoration: none;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: #818cf8;
+        }
+
+        .nav-item i { width: 20px; text-align: center; font-size: 1.1rem; }
+
+        .nav-badge {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            margin-left: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            height: var(--header-height);
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .top-bar-left { display: flex; align-items: center; gap: 15px; }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        .page-content { padding: 30px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .stat-info h3 { font-size: 1.8rem; margin-bottom: 5px; }
+        .stat-info p { color: var(--gray); font-size: 0.9rem; }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            padding: 20px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-header h3 { font-size: 1.2rem; }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        th {
+            text-align: left;
+            padding: 15px 25px;
+            background: #f8fafc;
+            font-weight: 600;
+            color: var(--gray);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td { padding: 15px 25px; border-bottom: 1px solid #f1f5f9; }
+        tbody tr:hover { background: #f8fafc; }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-active { background: #d1fae5; color: #065f46; }
+        .status-draft { background: #fef3c7; color: #92400e; }
+
+        .action-btns { display: flex; gap: 8px; }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 5px 15px rgba(79,70,229,0.3); }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+
+        .btn-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-edit { color: var(--primary); }
+        .btn-edit:hover { background: rgba(79,70,229,0.1); }
+        .btn-delete { color: var(--danger); }
+        .btn-delete:hover { background: rgba(239,68,68,0.1); }
+        .btn-view { color: var(--success); }
+        .btn-view:hover { background: rgba(16,185,129,0.1); }
+
+        .btn-logout {
+            background: rgba(239,68,68,0.1);
+            color: var(--danger);
+            padding: 8px 16px;
+            width: 100%;
+        }
+        .btn-logout:hover { background: rgba(239,68,68,0.2); }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            padding: 25px 30px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 1;
+        }
+
+        .modal-header h2 { font-size: 1.3rem; }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+        .modal-close:hover { color: var(--danger); }
+        .modal-body { padding: 30px; }
+
+        .form-group { margin-bottom: 20px; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79,70,229,0.1);
+        }
+
+        textarea.form-control { min-height: 120px; resize: vertical; }
+        select.form-control { cursor: pointer; }
+
+        .image-upload-container {
+            border: 2px dashed #e2e8f0;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .image-upload-container:hover {
+            border-color: var(--primary);
+            background: rgba(79,70,229,0.02);
+        }
+
+        .image-upload-container.has-image { border-style: solid; padding: 10px; }
+
+        .image-preview {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .image-preview.active { display: block; }
+
+        .upload-placeholder { color: var(--gray); }
+        .upload-placeholder i { font-size: 3rem; display: block; margin-bottom: 10px; }
+
+        .tags-input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            min-height: 50px;
+        }
+
+        .tag {
+            background: rgba(79,70,229,0.1);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .tag-remove { cursor: pointer; color: var(--danger); }
+
+        .tag-input {
+            border: none;
+            outline: none;
+            flex: 1;
+            min-width: 100px;
+            font-size: 0.9rem;
+        }
+
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: white;
+            margin-bottom: 10px;
+            animation: slideIn 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .toast-success { background: var(--success); }
+        .toast-error { background: var(--danger); }
+        .toast-info { background: var(--primary); }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+                box-shadow: 5px 0 25px rgba(0,0,0,0.2);
+            }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; }
+            .menu-toggle { display: block; }
+            .stats-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        }
+
+        @media (max-width: 768px) {
+            .page-content { padding: 20px; }
+            table { font-size: 0.85rem; }
+            th, td { padding: 10px 15px; }
+            .modal { width: 95%; }
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header"><h2>⚡ Portfolio Admin</h2></div>
+        <div class="sidebar-user">
+            <div class="user-avatar"><i class="fas fa-user-shield"></i></div>
+            <div>
+                <div style="font-weight:600;">Admin</div>
+                <div style="font-size:0.8rem;color:rgba(255,255,255,0.6);">Super Admin</div>
+            </div>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item active" data-page="dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+            <a href="#" class="nav-item" data-page="skills"><i class="fas fa-laptop-code"></i> Skills</a>
+            <a href="#" class="nav-item" data-page="projects"><i class="fas fa-project-diagram"></i> Projects</a>
+            <a href="#" class="nav-item" data-page="websites"><i class="fas fa-globe"></i> Websites</a>
+            <a href="#" class="nav-item" data-page="videos"><i class="fas fa-video"></i> Videos</a>
+            <a href="#" class="nav-item" data-page="achievements"><i class="fas fa-trophy"></i> Achievements</a>
+            <a href="#" class="nav-item" data-page="comments"><i class="fas fa-comments"></i> Comments <span class="nav-badge" id="unreadComments">0</span></a>
+            <a href="#" class="nav-item" data-page="settings"><i class="fas fa-cog"></i> Settings</a>
+        </nav>
+        <div style="padding:20px 25px;">
+            <button class="btn btn-logout" onclick="handleLogout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                <h3 id="pageTitle">Dashboard</h3>
+            </div>
+            <div style="display:flex;align-items:center;gap:15px;">
+                <span id="currentDateTime" style="color:var(--gray);font-size:0.9rem;"></span>
+                <a href="index.html" target="_blank" class="btn btn-sm btn-primary"><i class="fas fa-external-link-alt"></i> View Portfolio</a>
+            </div>
+        </div>
+        <div class="page-content" id="pageContent"></div>
+    </main>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Edit Item</h2>
+                <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body" id="modalBody"></div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr5MA2Hk42LfTtknni8UEAA2pjeIvTS3Y",
+            authDomain: "mart-portfolio.firebaseapp.com",
+            projectId: "mart-portfolio",
+            storageBucket: "mart-portfolio.firebasestorage.app",
+            messagingSenderId: "346525000560",
+            appId: "1:346525000560:web:0d4a13013af1cb32be65b5",
+            measurementId: "G-YVNMG7P15K"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        let currentUser = null;
+        let currentTags = [];
+        let removeTagCallback = null;
+
+        // Auth
+        onAuthStateChanged(auth, (user) => {
+            if (user) { 
+                currentUser = user; 
+                document.getElementById('loginScreen')?.remove(); 
+                initAdminPanel(); 
+            }
+            else { 
+                showLoginScreen(); 
+            }
+        });
+
+        function showLoginScreen() {
+            const existing = document.getElementById('loginScreen');
+            if (existing) existing.remove();
+            const loginScreen = document.createElement('div');
+            loginScreen.id = 'loginScreen';
+            loginScreen.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;z-index:9999;';
+            loginScreen.innerHTML = `<div style="max-width:400px;width:90%;padding:40px;border-radius:20px;background:white;box-shadow:0 20px 60px rgba(0,0,0,0.1);"><div style="text-align:center;margin-bottom:30px;"><i class="fas fa-shield-alt" style="font-size:3rem;color:#4f46e5;"></i><h2 style="margin-top:15px;">Admin Login</h2><p style="color:#64748b;">Sign in to manage</p></div><form id="loginForm"><div style="margin-bottom:20px;"><label style="display:block;margin-bottom:8px;font-weight:600;">Email</label><input type="email" id="loginEmail" style="width:100%;padding:12px 15px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.95rem;" required></div><div style="margin-bottom:20px;"><label style="display:block;margin-bottom:8px;font-weight:600;">Password</label><input type="password" id="loginPassword" style="width:100%;padding:12px 15px;border:2px solid #e2e8f0;border-radius:10px;font-size:0.95rem;" required></div><button type="submit" style="width:100%;padding:14px;background:#4f46e5;color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;font-size:1rem;"><i class="fas fa-sign-in-alt"></i> Sign In</button><div id="loginError" style="color:#ef4444;margin-top:15px;display:none;"></div></form></div>`;
+            document.body.appendChild(loginScreen);
+            document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                try {
+                    await signInWithEmailAndPassword(auth, document.getElementById('loginEmail').value, document.getElementById('loginPassword').value);
+                    loginScreen.remove();
+                } catch (error) {
+                    document.getElementById('loginError').textContent = 'Login failed: ' + error.message;
+                    document.getElementById('loginError').style.display = 'block';
+                }
+            });
+        }
+
+        async function handleLogout() {
+            await signOut(auth);
+            showToast('Logged out', 'success');
+        }
+
+        function initAdminPanel() {
+            updateDateTime();
+            setInterval(updateDateTime, 1000);
+            setupNavigation();
+            loadDashboard();
+            loadUnreadCount();
+        }
+
+        function updateDateTime() {
+            const el = document.getElementById('currentDateTime');
+            if (el) el.textContent = new Date().toLocaleString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' });
+        }
+
+        async function loadUnreadCount() {
+            const snap = await getDocs(collection(db, 'comments'));
+            document.getElementById('unreadComments').textContent = snap.docs.filter(d => !d.data().read).length;
+        }
+
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    document.getElementById('pageTitle').textContent = item.dataset.page.charAt(0).toUpperCase() + item.dataset.page.slice(1);
+                    loadPage(item.dataset.page);
+                    // Close sidebar on mobile after navigation
+                    if (window.innerWidth <= 1024) {
+                        document.getElementById('sidebar').classList.remove('active');
+                    }
+                });
+            });
+        }
+
+        function toggleSidebar() { 
+            document.getElementById('sidebar').classList.toggle('active'); 
+        }
+
+        async function loadPage(page) {
+            const pages = { 
+                dashboard: loadDashboard, 
+                skills: loadSkillsPage, 
+                projects: loadProjectsPage, 
+                websites: loadWebsitesPage, 
+                videos: loadVideosPage, 
+                achievements: loadAchievementsPage, 
+                comments: loadCommentsPage, 
+                settings: loadSettingsPage 
+            };
+            if (pages[page]) await pages[page]();
+            else await loadDashboard();
+        }
+
+        async function loadDashboard() {
+            const [skills, projects, websites, videos, achievements, comments] = await Promise.all([
+                getDocs(collection(db, 'skills')),
+                getDocs(collection(db, 'projects')),
+                getDocs(collection(db, 'websites')),
+                getDocs(collection(db, 'videos')),
+                getDocs(collection(db, 'achievements')),
+                getDocs(collection(db, 'comments'))
+            ]);
+            const total = skills.size + projects.size + websites.size + videos.size + achievements.size;
+            const unread = comments.docs.filter(d => !d.data().read).length;
+            document.getElementById('pageContent').innerHTML = `
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(79,70,229,0.1);color:#4f46e5;"><i class="fas fa-layer-group"></i></div><div class="stat-info"><h3>${total}</h3><p>Total Items</p></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(16,185,129,0.1);color:#10b981;"><i class="fas fa-project-diagram"></i></div><div class="stat-info"><h3>${projects.size}</h3><p>Projects</p></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(255,0,0,0.1);color:#ff0000;"><i class="fas fa-video"></i></div><div class="stat-info"><h3>${videos.size}</h3><p>Videos</p></div></div>
+                    <div class="stat-card"><div class="stat-icon" style="background:rgba(245,158,11,0.1);color:#f59e0b;"><i class="fas fa-trophy"></i></div><div class="stat-info"><h3>${achievements.size}</h3><p>Achievements</p></div></div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+                    <div class="table-container"><div class="table-header"><h3>Quick Actions</h3></div><div style="padding:25px;">
+                        <button class="btn btn-primary" onclick="window.openSkillModal()" style="width:100%;margin-bottom:10px;"><i class="fas fa-plus"></i> Add Skill</button>
+                        <button class="btn btn-primary" onclick="window.openProjectModal()" style="width:100%;margin-bottom:10px;"><i class="fas fa-plus"></i> Add Project</button>
+                        <button class="btn btn-primary" onclick="window.openVideoModal()" style="width:100%;margin-bottom:10px;"><i class="fas fa-plus"></i> Add Video</button>
+                        <button class="btn btn-primary" onclick="window.openAchievementModal()" style="width:100%;"><i class="fas fa-plus"></i> Add Achievement</button>
+                    </div></div>
+                </div>`;
+        }
+
+        // ==================== SKILLS ====================
+        async function loadSkillsPage() {
+            const snap = await getDocs(query(collection(db, 'skills'), orderBy('createdAt', 'desc')));
+            let rows = '';
+            snap.forEach(doc => {
+                const s = doc.data();
+                rows += `<tr><td><div style="display:flex;align-items:center;gap:10px;"><i class="${s.icon||'fas fa-star'}" style="font-size:1.5rem;color:#4f46e5;"></i><div><strong>${s.title}</strong><br><small style="color:var(--gray);">${(s.description||'').substring(0,50)}...</small></div></div></td><td><span class="status-badge status-active">Active</span></td><td>${s.createdAt?new Date(s.createdAt.toDate()).toLocaleDateString():'N/A'}</td><td><div class="action-btns"><button class="btn-icon btn-edit" onclick="window.editSkill('${doc.id}')"><i class="fas fa-edit"></i></button><button class="btn-icon btn-delete" onclick="window.deleteSkill('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Skills</h3><button class="btn btn-primary" onclick="window.openSkillModal()"><i class="fas fa-plus"></i> Add Skill</button></div><table><thead><tr><th>Skill</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="4" style="text-align:center;padding:40px;">No skills</td></tr>'}</tbody></table></div>`;
+        }
+
+        function openSkillModal(id = null) {
+            document.getElementById('modalTitle').textContent = id ? 'Edit Skill' : 'Add Skill';
+            document.getElementById('modalBody').innerHTML = `<form id="skillForm"><input type="hidden" id="skillId" value="${id||''}"><div class="form-group"><label>Icon Class</label><input type="text" id="skillIcon" class="form-control" value="fas fa-star" required></div><div class="form-group"><label>Title</label><input type="text" id="skillTitle" class="form-control" required></div><div class="form-group"><label>Description</label><textarea id="skillDescription" class="form-control" required></textarea></div><div class="form-group"><label>Level (0-100)</label><input type="range" id="skillLevel" class="form-control" min="0" max="100" value="80" style="padding:0;"><span id="skillLevelValue">80%</span></div><div class="form-group"><label>Category</label><select id="skillCategory" class="form-control"><option value="technical">Technical</option><option value="leadership">Leadership</option><option value="soft">Soft Skills</option><option value="other">Other</option></select></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:30px;"><button type="button" class="btn btn-sm" onclick="closeModal()" style="background:#e2e8f0;">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></div></form>`;
+            document.getElementById('skillLevel').addEventListener('input', (e) => document.getElementById('skillLevelValue').textContent = e.target.value + '%');
+            if (id) loadSkillData(id);
+            document.getElementById('skillForm').addEventListener('submit', handleSkillSubmit);
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        async function loadSkillData(id) {
+            const snap = await getDoc(doc(db, 'skills', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('skillIcon').value = d.icon || 'fas fa-star';
+                document.getElementById('skillTitle').value = d.title || '';
+                document.getElementById('skillDescription').value = d.description || '';
+                document.getElementById('skillLevel').value = d.level || 80;
+                document.getElementById('skillLevelValue').textContent = (d.level || 80) + '%';
+                document.getElementById('skillCategory').value = d.category || 'technical';
+            }
+        }
+
+        async function handleSkillSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('skillId').value;
+            const data = { 
+                icon: document.getElementById('skillIcon').value, 
+                title: document.getElementById('skillTitle').value, 
+                description: document.getElementById('skillDescription').value, 
+                level: parseInt(document.getElementById('skillLevel').value), 
+                category: document.getElementById('skillCategory').value, 
+                updatedAt: serverTimestamp() 
+            };
+            try {
+                if (id) { 
+                    await updateDoc(doc(db, 'skills', id), data); 
+                    showToast('Updated!', 'success'); 
+                }
+                else { 
+                    data.createdAt = serverTimestamp(); 
+                    await addDoc(collection(db, 'skills'), data); 
+                    showToast('Added!', 'success'); 
+                }
+                closeModal(); 
+                loadSkillsPage();
+            } catch (err) { 
+                showToast('Error: ' + err.message, 'error'); 
+            }
+        }
+
+        async function editSkill(id) { openSkillModal(id); }
+        async function deleteSkill(id) {
+            if (confirm('Delete this skill?')) { 
+                await deleteDoc(doc(db, 'skills', id)); 
+                showToast('Deleted!', 'success'); 
+                loadSkillsPage(); 
+            }
+        }
+
+        // ==================== PROJECTS ====================
+        async function loadProjectsPage() {
+            const snap = await getDocs(query(collection(db, 'projects'), orderBy('createdAt', 'desc')));
+            let rows = '';
+            snap.forEach(doc => {
+                const p = doc.data();
+                rows += `<tr><td><div style="display:flex;align-items:center;gap:15px;">${p.imageBase64?`<img src="${p.imageBase64}" style="width:60px;height:60px;border-radius:8px;object-fit:cover;">`:'<div style="width:60px;height:60px;background:#f1f5f9;border-radius:8px;display:flex;align-items:center;justify-content:center;"><i class="fas fa-image"></i></div>'}<div><strong>${p.title}</strong><br><small style="color:var(--gray);">${(p.description||'').substring(0,60)}...</small></div></div></td><td><div style="display:flex;gap:5px;flex-wrap:wrap;">${(p.tags||[]).map(t=>`<span class="tag" style="font-size:0.7rem;">${t}</span>`).join('')}</div></td><td>${p.link?`<a href="${p.link}" target="_blank" style="color:#4f46e5;"><i class="fas fa-external-link-alt"></i> View</a>`:'<span style="color:var(--gray);">No link</span>'}</td><td><div class="action-btns"><button class="btn-icon btn-edit" onclick="window.editProject('${doc.id}')"><i class="fas fa-edit"></i></button><button class="btn-icon btn-delete" onclick="window.deleteProject('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Projects</h3><button class="btn btn-primary" onclick="window.openProjectModal()"><i class="fas fa-plus"></i> Add Project</button></div><table><thead><tr><th>Project</th><th>Tags</th><th>Link</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="4" style="text-align:center;padding:40px;">No projects</td></tr>'}</tbody></table></div>`;
+        }
+
+        function openProjectModal(id = null) {
+            currentTags = [];
+            removeTagCallback = null;
+            document.getElementById('modalTitle').textContent = id ? 'Edit Project' : 'Add Project';
+            document.getElementById('modalBody').innerHTML = `<form id="projectForm"><input type="hidden" id="projectId" value="${id||''}"><div class="form-group"><label>Title</label><input type="text" id="projectTitle" class="form-control" required></div><div class="form-group"><label>Description</label><textarea id="projectDescription" class="form-control" required></textarea></div><div class="form-group"><label>Image</label><div class="image-upload-container" id="imgContainer" onclick="document.getElementById('projectImage').click()"><img id="imgPreview" class="image-preview"><div class="upload-placeholder" id="imgPlaceholder"><i class="fas fa-cloud-upload-alt"></i><p>Click to upload</p></div><input type="file" id="projectImage" accept="image/*" style="display:none;"></div><input type="hidden" id="projectImageBase64"></div><div class="form-group"><label>Link (Optional)</label><input type="url" id="projectLink" class="form-control" placeholder="https://..."></div><div class="form-group"><label>Tags</label><div class="tags-input-container" id="tagsContainer"><input type="text" id="tagInput" class="tag-input" placeholder="Type and press Enter"></div><input type="hidden" id="projectTags"></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:30px;"><button type="button" class="btn btn-sm" onclick="closeModal()" style="background:#e2e8f0;">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></div></form>`;
+            
+            document.getElementById('projectImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                if (file.size > 5*1024*1024) { 
+                    showToast('Image too large (max 5MB)','error'); 
+                    return; 
+                }
+                const reader = new FileReader();
+                reader.onload = (ev) => { 
+                    document.getElementById('imgPreview').src=ev.target.result; 
+                    document.getElementById('imgPreview').classList.add('active'); 
+                    document.getElementById('imgPlaceholder').style.display='none'; 
+                    document.getElementById('projectImageBase64').value=ev.target.result; 
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            setupTagsInput();
+            if (id) loadProjectData(id);
+            document.getElementById('projectForm').addEventListener('submit', handleProjectSubmit);
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        function setupTagsInput(initial = []) {
+            currentTags = [...initial];
+            const container = document.getElementById('tagsContainer');
+            const input = document.getElementById('tagInput');
+            
+            function render() {
+                // Remove existing tags
+                container.querySelectorAll('.tag').forEach(el => el.remove());
+                // Add current tags
+                currentTags.forEach((t, i) => {
+                    const el = document.createElement('span');
+                    el.className = 'tag';
+                    el.innerHTML = `${t} <span class="tag-remove" data-index="${i}">&times;</span>`;
+                    container.insertBefore(el, input);
+                });
+                // Update hidden input
+                document.getElementById('projectTags').value = JSON.stringify(currentTags);
+                // Add click handlers to remove buttons
+                container.querySelectorAll('.tag-remove').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        currentTags.splice(index, 1);
+                        render();
+                    });
+                });
+            }
+            
+            input.addEventListener('keydown', (e) => { 
+                if (e.key === 'Enter' && input.value.trim()) { 
+                    e.preventDefault(); 
+                    currentTags.push(input.value.trim()); 
+                    input.value = ''; 
+                    render(); 
+                } 
+            });
+            
+            if (initial.length) render();
+        }
+
+        async function loadProjectData(id) {
+            const snap = await getDoc(doc(db, 'projects', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('projectTitle').value = d.title || '';
+                document.getElementById('projectDescription').value = d.description || '';
+                document.getElementById('projectLink').value = d.link || '';
+                if (d.imageBase64) { 
+                    document.getElementById('imgPreview').src = d.imageBase64; 
+                    document.getElementById('imgPreview').classList.add('active'); 
+                    document.getElementById('imgPlaceholder').style.display = 'none'; 
+                    document.getElementById('projectImageBase64').value = d.imageBase64; 
+                }
+                setupTagsInput(d.tags || []);
+            }
+        }
+
+        async function handleProjectSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('projectId').value;
+            const data = { 
+                title: document.getElementById('projectTitle').value, 
+                description: document.getElementById('projectDescription').value, 
+                imageBase64: document.getElementById('projectImageBase64').value, 
+                link: document.getElementById('projectLink').value, 
+                tags: currentTags, 
+                updatedAt: serverTimestamp() 
+            };
+            try {
+                if (id) { 
+                    await updateDoc(doc(db, 'projects', id), data); 
+                    showToast('Updated!','success'); 
+                }
+                else { 
+                    data.createdAt = serverTimestamp(); 
+                    await addDoc(collection(db, 'projects'), data); 
+                    showToast('Added!','success'); 
+                }
+                closeModal(); 
+                loadProjectsPage();
+            } catch (err) { 
+                showToast('Error: '+err.message,'error'); 
+            }
+        }
+
+        async function editProject(id) { openProjectModal(id); }
+        async function deleteProject(id) {
+            if (confirm('Delete this project?')) { 
+                await deleteDoc(doc(db, 'projects', id)); 
+                showToast('Deleted!','success'); 
+                loadProjectsPage(); 
+            }
+        }
+
+        // ==================== WEBSITES ====================
+        async function loadWebsitesPage() {
+            const snap = await getDocs(query(collection(db, 'websites'), orderBy('createdAt', 'desc')));
+            let rows = '';
+            snap.forEach(doc => {
+                const w = doc.data();
+                rows += `<tr><td><strong>${w.title}</strong><br><small style="color:var(--gray);">${(w.description||'').substring(0,80)}...</small></td><td><a href="${w.url}" target="_blank" style="color:#4f46e5;">${(w.url||'').substring(0,40)}...</a></td><td>${w.createdAt?new Date(w.createdAt.toDate()).toLocaleDateString():'N/A'}</td><td><div class="action-btns"><button class="btn-icon btn-edit" onclick="window.editWebsite('${doc.id}')"><i class="fas fa-edit"></i></button><button class="btn-icon btn-delete" onclick="window.deleteWebsite('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Websites</h3><button class="btn btn-primary" onclick="window.openWebsiteModal()"><i class="fas fa-plus"></i> Add Website</button></div><table><thead><tr><th>Website</th><th>URL</th><th>Created</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="4" style="text-align:center;padding:40px;">No websites</td></tr>'}</tbody></table></div>`;
+        }
+
+        function openWebsiteModal(id = null) {
+            document.getElementById('modalTitle').textContent = id ? 'Edit Website' : 'Add Website';
+            document.getElementById('modalBody').innerHTML = `<form id="websiteForm"><input type="hidden" id="websiteId" value="${id||''}"><div class="form-group"><label>Title</label><input type="text" id="websiteTitle" class="form-control" required></div><div class="form-group"><label>Description</label><textarea id="websiteDescription" class="form-control" required></textarea></div><div class="form-group"><label>URL</label><input type="url" id="websiteUrl" class="form-control" placeholder="https://..." required></div><div class="form-group"><label>Iframe Preview URL (Optional)</label><input type="url" id="websiteIframeUrl" class="form-control" placeholder="https://..."></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:30px;"><button type="button" class="btn btn-sm" onclick="closeModal()" style="background:#e2e8f0;">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></div></form>`;
+            if (id) loadWebsiteData(id);
+            document.getElementById('websiteForm').addEventListener('submit', handleWebsiteSubmit);
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        async function loadWebsiteData(id) {
+            const snap = await getDoc(doc(db, 'websites', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('websiteTitle').value = d.title || '';
+                document.getElementById('websiteDescription').value = d.description || '';
+                document.getElementById('websiteUrl').value = d.url || '';
+                document.getElementById('websiteIframeUrl').value = d.iframeUrl || '';
+            }
+        }
+
+        async function handleWebsiteSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('websiteId').value;
+            const data = { 
+                title: document.getElementById('websiteTitle').value, 
+                description: document.getElementById('websiteDescription').value, 
+                url: document.getElementById('websiteUrl').value, 
+                iframeUrl: document.getElementById('websiteIframeUrl').value, 
+                updatedAt: serverTimestamp() 
+            };
+            try {
+                if (id) { 
+                    await updateDoc(doc(db, 'websites', id), data); 
+                    showToast('Updated!','success'); 
+                }
+                else { 
+                    data.createdAt = serverTimestamp(); 
+                    await addDoc(collection(db, 'websites'), data); 
+                    showToast('Added!','success'); 
+                }
+                closeModal(); 
+                loadWebsitesPage();
+            } catch (err) { 
+                showToast('Error: '+err.message,'error'); 
+            }
+        }
+
+        async function editWebsite(id) { openWebsiteModal(id); }
+        async function deleteWebsite(id) {
+            if (confirm('Delete?')) { 
+                await deleteDoc(doc(db, 'websites', id)); 
+                showToast('Deleted!','success'); 
+                loadWebsitesPage(); 
+            }
+        }
+
+        // ==================== VIDEOS ====================
+        async function loadVideosPage() {
+            const snap = await getDocs(query(collection(db, 'videos'), orderBy('createdAt', 'desc')));
+            let rows = '';
+            const ytCount = snap.docs.filter(d => d.data().platform === 'youtube').length;
+            const fbCount = snap.docs.filter(d => d.data().platform === 'facebook').length;
+            snap.forEach(doc => {
+                const v = doc.data();
+                const icon = v.platform==='youtube'?'fab fa-youtube':'fab fa-facebook';
+                const color = v.platform==='youtube'?'#ff0000':'#1877f2';
+                rows += `<tr><td><div style="display:flex;align-items:center;gap:15px;">${v.thumbnailBase64?`<img src="${v.thumbnailBase64}" style="width:80px;height:45px;border-radius:6px;object-fit:cover;">`:`<div style="width:80px;height:45px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center;"><i class="${icon}" style="color:${color};font-size:1.5rem;"></i></div>`}<div><strong>${v.title}</strong><br><small style="color:var(--gray);"><i class="${icon}" style="color:${color};"></i> ${v.platform==='youtube'?'YouTube':'Facebook'}</small></div></div></td><td><span class="status-badge ${v.featured?'status-active':'status-draft'}">${v.featured?'Featured':'Standard'}</span></td><td><a href="${v.url}" target="_blank" style="color:#4f46e5;"><i class="fas fa-external-link-alt"></i> View</a></td><td>${v.createdAt?new Date(v.createdAt.toDate()).toLocaleDateString():'N/A'}</td><td><div class="action-btns"><button class="btn-icon btn-view" onclick="window.previewVideo('${doc.id}')"><i class="fas fa-play"></i></button><button class="btn-icon btn-edit" onclick="window.editVideo('${doc.id}')"><i class="fas fa-edit"></i></button><button class="btn-icon btn-delete" onclick="window.deleteVideo('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="stats-grid"><div class="stat-card"><div class="stat-icon" style="background:rgba(255,0,0,0.1);color:#ff0000;"><i class="fab fa-youtube"></i></div><div class="stat-info"><h3>${ytCount}</h3><p>YouTube</p></div></div><div class="stat-card"><div class="stat-icon" style="background:rgba(24,119,242,0.1);color:#1877f2;"><i class="fab fa-facebook"></i></div><div class="stat-info"><h3>${fbCount}</h3><p>Facebook</p></div></div><div class="stat-card"><div class="stat-icon" style="background:rgba(79,70,229,0.1);color:#4f46e5;"><i class="fas fa-video"></i></div><div class="stat-info"><h3>${snap.size}</h3><p>Total</p></div></div></div><div class="table-container"><div class="table-header"><h3>Videos</h3><button class="btn btn-primary" onclick="window.openVideoModal()"><i class="fas fa-plus"></i> Add Video</button></div><table><thead><tr><th>Video</th><th>Status</th><th>Link</th><th>Created</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="5" style="text-align:center;padding:40px;">No videos</td></tr>'}</tbody></table></div>`;
+        }
+
+        function openVideoModal(id = null) {
+            document.getElementById('modalTitle').textContent = id ? 'Edit Video' : 'Add Video';
+            document.getElementById('modalBody').innerHTML = `<form id="videoForm"><input type="hidden" id="videoId" value="${id||''}"><div class="form-group"><label>Platform</label><select id="videoPlatform" class="form-control" onchange="window.toggleVideoPlatform()"><option value="youtube">YouTube</option><option value="facebook">Facebook</option></select></div><div class="form-group"><label>Title</label><input type="text" id="videoTitle" class="form-control" required></div><div class="form-group"><label>Description</label><textarea id="videoDescription" class="form-control" rows="3"></textarea></div><div class="form-group" id="videoUrlGroup"><label id="videoUrlLabel">YouTube URL</label><input type="url" id="videoUrl" class="form-control" placeholder="https://www.youtube.com/watch?v=..." required><small id="videoUrlHelp">Paste full YouTube URL</small></div><div class="form-group" id="videoThumbnailGroup" style="display:none;"><label>Thumbnail (for Facebook)</label><div class="image-upload-container" onclick="document.getElementById('videoThumbnail').click()"><img id="videoThumbPreview" class="image-preview"><div class="upload-placeholder" id="videoThumbPlaceholder"><i class="fas fa-image"></i><p>Click to upload</p></div><input type="file" id="videoThumbnail" accept="image/*" style="display:none;"></div><input type="hidden" id="videoThumbBase64"></div><div class="form-group"><label>Category</label><select id="videoCategory" class="form-control"><option value="scouting">Scouting</option><option value="community">Community Service</option><option value="tutorial">Tutorial</option><option value="event">Event</option><option value="other">Other</option></select></div><div class="form-group"><label>Featured</label><select id="videoFeatured" class="form-control"><option value="false">No</option><option value="true">Yes</option></select></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:30px;"><button type="button" class="btn btn-sm" onclick="closeModal()" style="background:#e2e8f0;">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></div></form>`;
+            
+            document.getElementById('videoThumbnail').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => { 
+                    document.getElementById('videoThumbPreview').src=ev.target.result; 
+                    document.getElementById('videoThumbPreview').classList.add('active'); 
+                    document.getElementById('videoThumbPlaceholder').style.display='none'; 
+                    document.getElementById('videoThumbBase64').value=ev.target.result; 
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            if (id) loadVideoData(id);
+            document.getElementById('videoForm').addEventListener('submit', handleVideoSubmit);
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        async function loadVideoData(id) {
+            const snap = await getDoc(doc(db, 'videos', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('videoPlatform').value = d.platform || 'youtube';
+                document.getElementById('videoTitle').value = d.title || '';
+                document.getElementById('videoDescription').value = d.description || '';
+                document.getElementById('videoUrl').value = d.url || '';
+                document.getElementById('videoCategory').value = d.category || 'other';
+                document.getElementById('videoFeatured').value = (d.featured||false).toString();
+                if (d.thumbnailBase64) { 
+                    document.getElementById('videoThumbPreview').src = d.thumbnailBase64; 
+                    document.getElementById('videoThumbPreview').classList.add('active'); 
+                    document.getElementById('videoThumbPlaceholder').style.display = 'none'; 
+                    document.getElementById('videoThumbBase64').value = d.thumbnailBase64; 
+                }
+                // Trigger platform toggle after setting value
+                setTimeout(() => window.toggleVideoPlatform(), 100);
+            }
+        }
+
+        function extractYouTubeId(url) {
+            const match = url.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/);
+            return (match && match[7].length===11) ? match[7] : null;
+        }
+
+        async function handleVideoSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('videoId').value;
+            const platform = document.getElementById('videoPlatform').value;
+            let embedId = '';
+            if (platform === 'youtube') {
+                embedId = extractYouTubeId(document.getElementById('videoUrl').value);
+                if (!embedId) { 
+                    showToast('Invalid YouTube URL','error'); 
+                    return; 
+                }
+            }
+            const data = { 
+                platform, 
+                title: document.getElementById('videoTitle').value, 
+                description: document.getElementById('videoDescription').value, 
+                url: document.getElementById('videoUrl').value, 
+                embedId, 
+                thumbnailBase64: document.getElementById('videoThumbBase64').value, 
+                category: document.getElementById('videoCategory').value, 
+                featured: document.getElementById('videoFeatured').value === 'true', 
+                updatedAt: serverTimestamp() 
+            };
+            try {
+                if (id) { 
+                    await updateDoc(doc(db, 'videos', id), data); 
+                    showToast('Updated!','success'); 
+                }
+                else { 
+                    data.createdAt = serverTimestamp(); 
+                    data.views = 0; 
+                    await addDoc(collection(db, 'videos'), data); 
+                    showToast('Added!','success'); 
+                }
+                closeModal(); 
+                loadVideosPage();
+            } catch (err) { 
+                showToast('Error: '+err.message,'error'); 
+            }
+        }
+
+        async function previewVideo(id) {
+            const snap = await getDoc(doc(db, 'videos', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('modalTitle').textContent = d.title || 'Preview';
+                document.getElementById('modalBody').innerHTML = `<div style="max-width:800px;margin:0 auto;">${d.platform==='youtube'?`<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;"><iframe src="https://www.youtube.com/embed/${d.embedId}?autoplay=1" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:10px;" allow="autoplay;encrypted-media" allowfullscreen></iframe></div>`:`<div style="text-align:center;"><img src="${d.thumbnailBase64||'https://via.placeholder.com/800x450'}" style="max-width:100%;border-radius:10px;margin-bottom:15px;"><a href="${d.url}" target="_blank" class="btn btn-primary"><i class="fab fa-facebook"></i> Watch on Facebook</a></div>`}<div style="margin-top:20px;"><h3>${d.title}</h3><p>${d.description||''}</p></div></div>`;
+                document.getElementById('modalOverlay').classList.add('active');
+                await updateDoc(doc(db, 'videos', id), { views: (d.views||0)+1 });
+            }
+        }
+
+        async function editVideo(id) { openVideoModal(id); }
+        async function deleteVideo(id) {
+            if (confirm('Delete?')) { 
+                await deleteDoc(doc(db, 'videos', id)); 
+                showToast('Deleted!','success'); 
+                loadVideosPage(); 
+            }
+        }
+
+        // ==================== ACHIEVEMENTS ====================
+        async function loadAchievementsPage() {
+            const snap = await getDocs(query(collection(db, 'achievements'), orderBy('date', 'desc')));
+            let rows = '';
+            snap.forEach(doc => {
+                const a = doc.data();
+                rows += `<tr><td>${a.imageBase64?`<img src="${a.imageBase64}" style="width:50px;height:50px;border-radius:8px;object-fit:cover;">`:''}</td><td><strong>${a.title}</strong><br><small style="color:var(--gray);">${(a.description||'').substring(0,80)}...</small></td><td>${a.date||'N/A'}</td><td><div class="action-btns"><button class="btn-icon btn-edit" onclick="window.editAchievement('${doc.id}')"><i class="fas fa-edit"></i></button><button class="btn-icon btn-delete" onclick="window.deleteAchievement('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Achievements</h3><button class="btn btn-primary" onclick="window.openAchievementModal()"><i class="fas fa-plus"></i> Add</button></div><table><thead><tr><th>Image</th><th>Details</th><th>Date</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="4" style="text-align:center;padding:40px;">No achievements</td></tr>'}</tbody></table></div>`;
+        }
+
+        function openAchievementModal(id = null) {
+            document.getElementById('modalTitle').textContent = id ? 'Edit Achievement' : 'Add Achievement';
+            document.getElementById('modalBody').innerHTML = `<form id="achievementForm"><input type="hidden" id="achievementId" value="${id||''}"><div class="form-group"><label>Title</label><input type="text" id="achievementTitle" class="form-control" required></div><div class="form-group"><label>Description</label><textarea id="achievementDescription" class="form-control" required></textarea></div><div class="form-group"><label>Date</label><input type="text" id="achievementDate" class="form-control" placeholder="e.g. 17 July, 2025" required></div><div class="form-group"><label>Image</label><div class="image-upload-container" onclick="document.getElementById('achievementImage').click()"><img id="achImgPreview" class="image-preview"><div class="upload-placeholder" id="achPlaceholder"><i class="fas fa-cloud-upload-alt"></i><p>Click to upload</p></div><input type="file" id="achievementImage" accept="image/*" style="display:none;"></div><input type="hidden" id="achievementImageBase64"></div><div style="display:flex;gap:10px;justify-content:flex-end;margin-top:30px;"><button type="button" class="btn btn-sm" onclick="closeModal()" style="background:#e2e8f0;">Cancel</button><button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save</button></div></form>`;
+            
+            document.getElementById('achievementImage').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = (ev) => { 
+                    document.getElementById('achImgPreview').src=ev.target.result; 
+                    document.getElementById('achImgPreview').classList.add('active'); 
+                    document.getElementById('achPlaceholder').style.display='none'; 
+                    document.getElementById('achievementImageBase64').value=ev.target.result; 
+                };
+                reader.readAsDataURL(file);
+            });
+            
+            if (id) loadAchievementData(id);
+            document.getElementById('achievementForm').addEventListener('submit', handleAchievementSubmit);
+            document.getElementById('modalOverlay').classList.add('active');
+        }
+
+        async function loadAchievementData(id) {
+            const snap = await getDoc(doc(db, 'achievements', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                document.getElementById('achievementTitle').value = d.title || '';
+                document.getElementById('achievementDescription').value = d.description || '';
+                document.getElementById('achievementDate').value = d.date || '';
+                if (d.imageBase64) { 
+                    document.getElementById('achImgPreview').src=d.imageBase64; 
+                    document.getElementById('achImgPreview').classList.add('active'); 
+                    document.getElementById('achPlaceholder').style.display='none'; 
+                    document.getElementById('achievementImageBase64').value=d.imageBase64; 
+                }
+            }
+        }
+
+        async function handleAchievementSubmit(e) {
+            e.preventDefault();
+            const id = document.getElementById('achievementId').value;
+            const data = { 
+                title: document.getElementById('achievementTitle').value, 
+                description: document.getElementById('achievementDescription').value, 
+                date: document.getElementById('achievementDate').value, 
+                imageBase64: document.getElementById('achievementImageBase64').value, 
+                updatedAt: serverTimestamp() 
+            };
+            try {
+                if (id) { 
+                    await updateDoc(doc(db, 'achievements', id), data); 
+                    showToast('Updated!','success'); 
+                }
+                else { 
+                    data.createdAt = serverTimestamp(); 
+                    await addDoc(collection(db, 'achievements'), data); 
+                    showToast('Added!','success'); 
+                }
+                closeModal(); 
+                loadAchievementsPage();
+            } catch (err) { 
+                showToast('Error: '+err.message,'error'); 
+            }
+        }
+
+        async function editAchievement(id) { openAchievementModal(id); }
+        async function deleteAchievement(id) {
+            if (confirm('Delete?')) { 
+                await deleteDoc(doc(db, 'achievements', id)); 
+                showToast('Deleted!','success'); 
+                loadAchievementsPage(); 
+            }
+        }
+
+        // ==================== COMMENTS ====================
+        async function loadCommentsPage() {
+            const snap = await getDocs(query(collection(db, 'comments'), orderBy('createdAt', 'desc')));
+            let rows = '';
+            snap.forEach(doc => {
+                const c = doc.data();
+                rows += `<tr style="${!c.read?'background:#fef3c7;':''}"><td><strong>${c.name}</strong><br><small>${c.email}</small></td><td>${(c.message||'').substring(0,100)}...</td><td>${c.createdAt?new Date(c.createdAt.toDate()).toLocaleString():'N/A'}</td><td><span class="status-badge ${c.read?'status-active':'status-draft'}">${c.read?'Read':'Unread'}</span></td><td><div class="action-btns"><button class="btn-icon btn-view" onclick="window.viewComment('${doc.id}')"><i class="fas fa-eye"></i></button><button class="btn-icon btn-delete" onclick="window.deleteComment('${doc.id}')"><i class="fas fa-trash"></i></button></div></td></tr>`;
+            });
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Comments</h3></div><table><thead><tr><th>From</th><th>Message</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead><tbody>${rows||'<tr><td colspan="5" style="text-align:center;padding:40px;">No comments</td></tr>'}</tbody></table></div>`;
+            loadUnreadCount();
+        }
+
+        async function viewComment(id) {
+            await updateDoc(doc(db, 'comments', id), { read: true });
+            const snap = await getDoc(doc(db, 'comments', id));
+            if (snap.exists()) {
+                const d = snap.data();
+                alert(`From: ${d.name} (${d.email})\n\nMessage: ${d.message}\n\nDate: ${d.createdAt?new Date(d.createdAt.toDate()).toLocaleString():'N/A'}`);
+            }
+            loadCommentsPage();
+        }
+
+        async function deleteComment(id) {
+            if (confirm('Delete?')) { 
+                await deleteDoc(doc(db, 'comments', id)); 
+                showToast('Deleted!','success'); 
+                loadCommentsPage(); 
+            }
+        }
+
+        // ==================== SETTINGS ====================
+        function loadSettingsPage() {
+            document.getElementById('pageContent').innerHTML = `<div class="table-container"><div class="table-header"><h3>Settings</h3></div><div style="padding:30px;"><div class="form-group"><label>Export Data</label><button class="btn btn-primary" onclick="window.exportData()"><i class="fas fa-download"></i> Export JSON</button></div><div class="form-group" style="margin-top:30px;"><label style="color:#ef4444;">Clear Cache</label><button class="btn" style="background:#ef4444;color:white;" onclick="window.clearCache()"><i class="fas fa-sync-alt"></i> Clear Cache</button></div></div></div>`;
+        }
+
+        async function exportData() {
+            const data = { skills:[], projects:[], websites:[], videos:[], achievements:[], exportDate: new Date().toISOString() };
+            const collections = ['skills','projects','websites','videos','achievements'];
+            for (const col of collections) {
+                const snap = await getDocs(collection(db, col));
+                snap.forEach(doc => data[col].push({ id: doc.id, ...doc.data() }));
+            }
+            const blob = new Blob([JSON.stringify(data,null,2)], { type:'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `portfolio-backup-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            showToast('Exported!','success');
+        }
+
+        function clearCache() {
+            if (confirm('Clear cache and reload?')) { 
+                localStorage.clear(); 
+                sessionStorage.clear(); 
+                showToast('Cleared!','success'); 
+                setTimeout(()=>location.reload(),1000); 
+            }
+        }
+
+        function closeModal() { 
+            document.getElementById('modalOverlay').classList.remove('active'); 
+        }
+
+        function showToast(msg, type='info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = msg;
+            container.appendChild(toast);
+            setTimeout(() => { 
+                toast.style.opacity='0'; 
+                toast.style.transform='translateX(100%)'; 
+                setTimeout(()=>toast.remove(),300); 
+            }, 3000);
+        }
+
+        // ==================== GLOBAL FUNCTIONS ====================
+        // Expose functions to window object for inline onclick handlers
+        window.toggleSidebar = toggleSidebar;
+        window.handleLogout = handleLogout;
+        window.closeModal = closeModal;
+        window.openSkillModal = openSkillModal; 
+        window.editSkill = editSkill; 
+        window.deleteSkill = deleteSkill;
+        window.openProjectModal = openProjectModal; 
+        window.editProject = editProject; 
+        window.deleteProject = deleteProject;
+        window.openWebsiteModal = openWebsiteModal; 
+        window.editWebsite = editWebsite; 
+        window.deleteWebsite = deleteWebsite;
+        window.openVideoModal = openVideoModal; 
+        window.editVideo = editVideo; 
+        window.deleteVideo = deleteVideo; 
+        window.previewVideo = previewVideo;
+        window.openAchievementModal = openAchievementModal; 
+        window.editAchievement = editAchievement; 
+        window.deleteAchievement = deleteAchievement;
+        window.viewComment = viewComment; 
+        window.deleteComment = deleteComment;
+        window.exportData = exportData; 
+        window.clearCache = clearCache;
+        
+        // Fixed toggleVideoPlatform function
+        window.toggleVideoPlatform = function() {
+            const platformSelect = document.getElementById('videoPlatform');
+            if (!platformSelect) return;
+            
+            const platform = platformSelect.value;
+            const thumbnailGroup = document.getElementById('videoThumbnailGroup');
+            const urlLabel = document.getElementById('videoUrlLabel');
+            const urlHelp = document.getElementById('videoUrlHelp');
+            const urlInput = document.getElementById('videoUrl');
+            
+            if (thumbnailGroup) {
+                thumbnailGroup.style.display = platform === 'facebook' ? 'block' : 'none';
+            }
+            if (urlLabel) {
+                urlLabel.textContent = platform === 'youtube' ? 'YouTube URL' : 'Facebook URL';
+            }
+            if (urlHelp) {
+                urlHelp.textContent = platform === 'youtube' ? 'Paste full YouTube URL' : 'Paste Facebook video URL';
+            }
+            if (urlInput) {
+                urlInput.placeholder = platform === 'youtube' ? 'https://www.youtube.com/watch?v=...' : 'https://www.facebook.com/.../videos/...';
+            }
+        };
+
+        // Close modal when clicking overlay
+        document.getElementById('modalOverlay').addEventListener('click', function(e) { 
+            if (e.target === this) closeModal(); 
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const menuToggle = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 1024 && 
+                sidebar.classList.contains('active') && 
+                !sidebar.contains(e.target) && 
+                !menuToggle.contains(e.target)) {
+                sidebar.classList.remove('active');
+            }
+        });
+
+        // Initialize
+        if (!currentUser) showLoginScreen();
+    </script>
+</body>
+</html>
