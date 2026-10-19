@@ -54,7 +54,6 @@
         p { color: var(--ink-dim); font-size: 1.02rem; }
         a { color: inherit; }
 
-        /* trail rule divider */
         .trail-rule { display: flex; align-items: center; gap: 10px; color: var(--ink-faint); }
         .trail-rule .dash { flex: 1; height: 1px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px); }
         .trail-rule i { color: var(--brass); font-size: 0.8rem; }
@@ -65,6 +64,9 @@
         .btn-outline:hover { border-color: var(--brass); color: var(--brass-bright); background: transparent; transform: translateY(-2px); }
         .btn-whatsapp { background: var(--whatsapp); border-color: var(--whatsapp); color: #04220f; }
         .btn-whatsapp:hover { background: #2fe578; border-color: #2fe578; transform: translateY(-2px); }
+        .btn-load-more { background: transparent; border: 1px solid var(--brass); color: var(--brass-bright); padding: 12px 32px; font-weight: 600; font-size: 0.95rem; border-radius: 2px; cursor: pointer; transition: all 0.25s; margin: 32px auto 0; display: block; width: fit-content; }
+        .btn-load-more:hover { background: var(--brass); color: #16180f; }
+        .btn-load-more i { margin-right: 6px; }
 
         header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: transparent; border-bottom: 1px solid transparent; transition: all 0.35s ease; }
         header.scrolled { background: rgba(10,12,9,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
@@ -379,7 +381,7 @@
                     <p id="aboutBio">I am a dedicated student, Rover Scout, and youth leader with a passion for community service.</p>
                     <div class="personal-info" id="personalInfo">
                         <div class="info-item"><i class="fas fa-user"></i><span id="infoName">Md. Ashfaqur Rahman Tanim</span></div>
-                        <div class="info-item"><i class="fas fa-birthday-cake"></i><span id="infoBirthday">13 NNovember2005</span></div>
+                        <div class="info-item"><i class="fas fa-birthday-cake"></i><span id="infoBirthday">13 November 2005</span></div>
                         <div class="info-item"><i class="fas fa-map-marker-alt"></i><span id="infoLocation">Kishoreganj, Bangladesh</span></div>
                         <div class="info-item"><i class="fas fa-graduation-cap"></i><span id="infoEducation">Gurudayal Government College</span></div>
                         <div class="info-item"><i class="fas fa-phone"></i><span id="infoPhone">+880 1612-018221</span></div>
@@ -432,6 +434,7 @@
                 <h2>My Projects as a Rover</h2>
             </div>
             <div class="projects-grid" id="projectsGrid"></div>
+            <button class="btn-load-more" id="loadMoreProjects" style="display:none;"><i class="fas fa-chevron-down"></i> Load All Projects</button>
         </div>
     </section>
 
@@ -442,6 +445,7 @@
                 <h2>My Websites</h2>
             </div>
             <div class="websites-container" id="websitesContainer"></div>
+            <button class="btn-load-more" id="loadMoreWebsites" style="display:none;"><i class="fas fa-chevron-down"></i> Load All Websites</button>
         </div>
     </section>
 
@@ -461,6 +465,7 @@
                 <button class="filter-btn" data-category="other">Other</button>
             </div>
             <div class="video-grid" id="videoGrid"></div>
+            <button class="btn-load-more" id="loadMoreVideos" style="display:none;"><i class="fas fa-chevron-down"></i> Load All Videos</button>
         </div>
     </section>
 
@@ -471,6 +476,7 @@
                 <h2>Achievements</h2>
             </div>
             <div class="timeline" id="achievementsTimeline"></div>
+            <button class="btn-load-more" id="loadMoreAchievements" style="display:none;"><i class="fas fa-chevron-down"></i> Load All Achievements</button>
         </div>
     </section>
 
@@ -625,6 +631,15 @@
             scrollTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
         }
 
+        // ===== DATA CACHE =====
+        const cachedData = {
+            projects: null,
+            websites: null,
+            videos: null,
+            achievements: null
+        };
+
+        // ===== SKILLS =====
         async function loadSkills() {
             const container = document.getElementById('skillsContainer');
             try {
@@ -640,54 +655,108 @@
             } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading skills.</p>'; }
         }
 
-        async function loadProjects() {
+        // ===== PROJECTS =====
+        async function loadProjects(loadAll = false) {
             const container = document.getElementById('projectsGrid');
+            const loadMoreBtn = document.getElementById('loadMoreProjects');
             try {
-                const snap = await getDocs(query(collection(db, 'projects'), orderBy('createdAt','desc')));
-                if (snap.empty) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No projects added yet.</p>'; return; }
+                if (!cachedData.projects) {
+                    const snap = await getDocs(query(collection(db, 'projects'), orderBy('createdAt','desc')));
+                    const all = [];
+                    snap.forEach(doc => all.push({ id: doc.id, ...doc.data() }));
+                    cachedData.projects = all;
+                }
+                const all = cachedData.projects;
+                const displayCount = loadAll ? all.length : 6;
+                const toShow = all.slice(0, displayCount);
+                
+                if (all.length === 0) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No projects added yet.</p>'; loadMoreBtn.style.display = 'none'; return; }
+                
                 let html = '';
-                snap.forEach(doc => {
-                    const p = doc.data();
+                toShow.forEach(p => {
                     html += `<div class="project-card"><div class="project-image"><img src="${p.imageBase64||'https://via.placeholder.com/400x200'}" alt="${p.title}"></div><div class="project-content"><h3>${p.title}</h3><p>${p.description||''}</p><div class="project-tags">${(p.tags||[]).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>${p.link?`<a href="${p.link}" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>`:''}</div></div>`;
                 });
                 container.innerHTML = html;
+                
+                if (all.length > 6 && !loadAll) {
+                    loadMoreBtn.style.display = 'block';
+                    loadMoreBtn.onclick = () => { loadProjects(true); loadMoreBtn.style.display = 'none'; };
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
             } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading projects.</p>'; }
         }
 
-        async function loadWebsites() {
+        // ===== WEBSITES =====
+        async function loadWebsites(loadAll = false) {
             const container = document.getElementById('websitesContainer');
+            const loadMoreBtn = document.getElementById('loadMoreWebsites');
             try {
-                const snap = await getDocs(query(collection(db, 'websites'), orderBy('createdAt','desc')));
-                if (snap.empty) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No websites added yet.</p>'; return; }
+                if (!cachedData.websites) {
+                    const snap = await getDocs(query(collection(db, 'websites'), orderBy('createdAt','desc')));
+                    const all = [];
+                    snap.forEach(doc => all.push({ id: doc.id, ...doc.data() }));
+                    cachedData.websites = all;
+                }
+                const all = cachedData.websites;
+                const displayCount = loadAll ? all.length : 6;
+                const toShow = all.slice(0, displayCount);
+                
+                if (all.length === 0) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No websites added yet.</p>'; loadMoreBtn.style.display = 'none'; return; }
+                
                 let html = '';
-                snap.forEach(doc => {
-                    const w = doc.data();
+                toShow.forEach(w => {
                     html += `<div class="website-card"><div class="website-preview">${w.iframeUrl?`<iframe src="${w.iframeUrl}" loading="lazy"></iframe>`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-faint);"><i class="fas fa-globe" style="font-size:2.6rem;"></i></div>`}</div><div class="website-content"><h3>${w.title}</h3><p>${w.description||''}</p><a href="${w.url||'#'}" class="website-link" target="_blank">Visit <i class="fas fa-external-link-alt"></i></a></div></div>`;
                 });
                 container.innerHTML = html;
+                
+                if (all.length > 6 && !loadAll) {
+                    loadMoreBtn.style.display = 'block';
+                    loadMoreBtn.onclick = () => { loadWebsites(true); loadMoreBtn.style.display = 'none'; };
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
             } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading websites.</p>'; }
         }
 
-        async function loadVideos(category = 'all') {
+        // ===== VIDEOS =====
+        async function loadVideos(category = 'all', loadAll = false) {
             const grid = document.getElementById('videoGrid');
             const filters = document.getElementById('videoFilters');
             const featuredEl = document.getElementById('featuredVideo');
+            const loadMoreBtn = document.getElementById('loadMoreVideos');
             try {
-                const snap = await getDocs(query(collection(db, 'videos'), orderBy('createdAt','desc')));
-                if (snap.empty) { grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No videos yet.</p>'; filters.style.display='none'; featuredEl.innerHTML=''; return; }
+                if (!cachedData.videos) {
+                    const snap = await getDocs(query(collection(db, 'videos'), orderBy('createdAt','desc')));
+                    const all = [];
+                    snap.forEach(doc => all.push({ id: doc.id, ...doc.data() }));
+                    cachedData.videos = all;
+                }
+                const all = cachedData.videos;
+                if (all.length === 0) { grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No videos yet.</p>'; filters.style.display='none'; featuredEl.innerHTML=''; loadMoreBtn.style.display = 'none'; return; }
                 filters.style.display = 'flex';
-                const all = [];
-                snap.forEach(doc => all.push({ id: doc.id, ...doc.data() }));
+                
                 const featured = all.find(v => v.featured);
                 if (featured) {
                     featuredEl.innerHTML = `<h3 style="text-align:center;margin-bottom:25px;color:var(--brass-bright);font-family:var(--serif);"><i class="fas fa-star"></i> Featured Video</h3><div class="featured-video-container"><div class="featured-video-player">${featured.platform==='youtube'?`<iframe src="https://www.youtube.com/embed/${featured.embedId}" allowfullscreen></iframe>`:`<img src="${featured.thumbnailBase64||'https://via.placeholder.com/800x450'}">`}</div><div class="featured-video-info"><h3>${featured.title}</h3><p>${featured.description||''}</p><a href="${featured.url}" target="_blank" class="video-link"><i class="fab fa-${featured.platform}"></i> Watch on ${featured.platform==='youtube'?'YouTube':'Facebook'}</a></div></div>`;
                 } else { featuredEl.innerHTML = ''; }
-                const filtered = category==='all'?all:all.filter(v=>v.category===category);
+                
+                const filtered = category==='all' ? all : all.filter(v=>v.category===category);
+                const displayCount = loadAll ? filtered.length : 6;
+                const toShow = filtered.slice(0, displayCount);
+                
                 let html = '';
-                filtered.forEach(v => {
+                toShow.forEach(v => {
                     html += `<div class="video-card${v.featured?' featured':''}"><div class="video-thumbnail" onclick="${v.platform==='youtube'?`playYouTube(this,'${v.embedId}')`:`window.open('${v.url}','_blank')`}"><span class="platform-badge platform-${v.platform}"><i class="fab fa-${v.platform}"></i> ${v.platform==='youtube'?'YouTube':'Facebook'}</span>${v.platform==='youtube'?`<img src="https://img.youtube.com/vi/${v.embedId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.embedId}/hqdefault.jpg'"><div class="play-button"><i class="fas fa-play"></i></div>`:`<img src="${v.thumbnailBase64||'https://via.placeholder.com/640x360'}"><div class="play-button"><i class="fas fa-external-link-alt"></i></div>`}</div><div class="video-content"><h3>${v.title}</h3><p>${(v.description||'').substring(0,100)}</p><div class="video-meta"><span><i class="fas fa-tag"></i> ${v.category}</span><span><i class="fas fa-eye"></i> ${v.views||0}</span></div><a href="${v.url}" target="_blank" class="video-link"><i class="fab fa-${v.platform}"></i> Watch</a></div></div>`;
                 });
                 grid.innerHTML = html || '<p style="text-align:center;grid-column:1/-1;">No videos in this category.</p>';
+                
+                if (filtered.length > 6 && !loadAll) {
+                    loadMoreBtn.style.display = 'block';
+                    loadMoreBtn.onclick = () => { loadVideos(category, true); loadMoreBtn.style.display = 'none'; };
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
             } catch (e) { grid.innerHTML = '<p style="text-align:center;">Error loading videos.</p>'; }
         }
 
@@ -700,25 +769,44 @@
                 btn.addEventListener('click', function() {
                     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
                     this.classList.add('active');
-                    loadVideos(this.dataset.category);
+                    loadVideos(this.dataset.category, false);
                 });
             });
         }
 
-        async function loadAchievements() {
+        // ===== ACHIEVEMENTS =====
+        async function loadAchievements(loadAll = false) {
             const container = document.getElementById('achievementsTimeline');
+            const loadMoreBtn = document.getElementById('loadMoreAchievements');
             try {
-                const snap = await getDocs(query(collection(db, 'achievements'), orderBy('date','desc')));
-                if (snap.empty) { container.innerHTML = '<p style="text-align:center;">No achievements yet.</p>'; return; }
+                if (!cachedData.achievements) {
+                    const snap = await getDocs(query(collection(db, 'achievements'), orderBy('date','desc')));
+                    const all = [];
+                    snap.forEach(doc => all.push({ id: doc.id, ...doc.data() }));
+                    cachedData.achievements = all;
+                }
+                const all = cachedData.achievements;
+                const displayCount = loadAll ? all.length : 6;
+                const toShow = all.slice(0, displayCount);
+                
+                if (all.length === 0) { container.innerHTML = '<p style="text-align:center;">No achievements yet.</p>'; loadMoreBtn.style.display = 'none'; return; }
+                
                 let html = '';
-                snap.forEach(doc => {
-                    const a = doc.data();
+                toShow.forEach(a => {
                     html += `<div class="timeline-item"><div class="timeline-content"><div class="timeline-date">${a.date||'N/A'}</div>${a.imageBase64?`<img src="${a.imageBase64}" alt="${a.title}">`:''}<h3>${a.title}</h3><p>${a.description||''}</p></div></div>`;
                 });
                 container.innerHTML = html;
+                
+                if (all.length > 6 && !loadAll) {
+                    loadMoreBtn.style.display = 'block';
+                    loadMoreBtn.onclick = () => { loadAchievements(true); loadMoreBtn.style.display = 'none'; };
+                } else {
+                    loadMoreBtn.style.display = 'none';
+                }
             } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading achievements.</p>'; }
         }
 
+        // ===== ABOUT =====
         async function loadAbout() {
             try {
                 const snap = await getDocs(collection(db, 'about'));
@@ -735,6 +823,7 @@
             } catch (e) { console.error('Error loading about:', e); }
         }
 
+        // ===== COMMENTS =====
         async function loadComments() {
             const commentsList = document.getElementById('commentsList');
             const commentCount = document.getElementById('commentCountNumber');
