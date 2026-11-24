@@ -963,5 +963,217 @@
 
         document.addEventListener('DOMContentLoaded', init);
     </script>
+    <!-- PASTE THIS WHOLE BLOCK just before </body> in your portfolio (after your existing <script type="module">) -->
+<script>
+(() => {
+  const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ---------- styles ---------- */
+  const css = document.createElement('style');
+  css.textContent = `
+  body{transition:background .4s,color .4s}
+  #progress{position:fixed;top:0;left:0;height:3px;width:100%;background:linear-gradient(90deg,var(--pine-bright),var(--brass-bright));transform:scaleX(0);transform-origin:left;z-index:1200}
+  #glow{position:fixed;left:0;top:0;width:460px;height:460px;margin:-230px 0 0 -230px;border-radius:50%;background:radial-gradient(circle,rgba(201,162,76,.10),transparent 65%);pointer-events:none;z-index:1;will-change:transform}
+  @media (hover:none){#glow{display:none}}
+  .hero{overflow:hidden}.hero .container{position:relative;z-index:1}
+  #heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+  .caret{display:inline-block;width:2px;height:1.1em;background:var(--brass);margin-left:4px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .theme-toggle{background:none;border:1px solid var(--line-strong);color:var(--brass-bright);width:38px;height:38px;border-radius:50%;cursor:pointer;transition:transform .4s,border-color .25s}
+  .theme-toggle:hover{border-color:var(--brass);transform:rotate(25deg)}
+  .nav-links a.active{color:var(--brass-bright)}
+  .nav-links a.active:after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--brass)}
+  .rv:not(.in){opacity:0}
+  .rv.in{animation:rise .7s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+  .stats{padding:56px 0;background:var(--bg)}
+  .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+  .stat{background:var(--bg);padding:28px 16px;text-align:center}
+  .stat b{display:block;font-family:var(--serif);font-size:2.6rem;color:var(--brass-bright);line-height:1}
+  .stat span{color:var(--ink-faint);font-size:.85rem}
+  .project-card,.skill-card,.video-card{position:relative;transform-style:preserve-3d;transition:transform .25s ease-out,border-color .3s}
+  .project-card:after,.skill-card:after,.video-card:after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(233,200,119,.14),transparent 55%)}
+  .project-card:hover:after,.skill-card:hover:after,.video-card:hover:after{opacity:1}
+  .chip-row{display:flex;flex-wrap:wrap;gap:10px;margin:-20px 0 32px}
+  .chip{padding:8px 18px;border:1px solid var(--line-strong);background:transparent;color:var(--ink-dim);border-radius:20px;cursor:pointer;font-weight:600;font-size:.82rem;transition:all .25s}
+  .chip:hover,.chip.active{background:var(--brass);color:#16180f;border-color:var(--brass)}
+  .project-image img,.timeline-content img{cursor:zoom-in}
+  #lightbox{position:fixed;inset:0;background:rgba(5,6,4,.9);display:flex;align-items:center;justify-content:center;z-index:3000;opacity:0;pointer-events:none;transition:opacity .3s;cursor:zoom-out}
+  #lightbox.open{opacity:1;pointer-events:auto}
+  #lightbox img{max-width:92vw;max-height:88vh;border:1px solid var(--brass);transform:scale(.94);transition:transform .3s}
+  #lightbox.open img{transform:none}
+  [data-theme=light]{--bg:#f6f1e4;--bg-alt:#ede6d3;--surface:#fffaf0;--surface-2:#f2ead6;--line:rgba(40,36,24,.12);--line-strong:rgba(40,36,24,.26);--ink:#23201a;--ink-dim:#5b5547;--ink-faint:#8a8270;--brass:#a07a22;--brass-bright:#7d5d12;--pine-bright:#2f6a47}
+  [data-theme=light] header.scrolled{background:rgba(246,241,228,.92)}
+  [data-theme=light] footer{background:#e6dfca}
+  [data-theme=light] .website-preview{background:#fffaf0}
+  [data-theme=light] .website-preview:before{background:#ede6d3}
+  [data-theme=light] .btn:not(.btn-outline):not(.btn-whatsapp){color:#fffaf0}
+  [data-theme=light] .filter-btn:hover,[data-theme=light] .filter-btn.active,[data-theme=light] .chip:hover,[data-theme=light] .chip.active{color:#fffaf0}
+  @media (prefers-reduced-motion:reduce){.rv:not(.in){opacity:1}.rv.in{animation:none}#glow{display:none}}`;
+  document.head.appendChild(css);
+
+  /* ---------- injected markup ---------- */
+  document.body.insertAdjacentHTML('afterbegin', '<div id="progress"></div><div id="glow"></div><div id="lightbox"><img alt=""></div>');
+  $('#home').insertAdjacentHTML('afterbegin', '<canvas id="heroCanvas" aria-hidden="true"></canvas>');
+  $('#hamburger').insertAdjacentHTML('beforebegin', '<button class="theme-toggle" id="themeToggle" aria-label="Toggle light or dark theme"></button>');
+  $('#skills').insertAdjacentHTML('beforebegin', '<section class="stats" id="stats"><div class="container"><div class="stats-grid">' +
+    [['projects', 'Projects'], ['websites', 'Websites'], ['videos', 'Videos'], ['achievements', 'Achievements'], ['skills', 'Skills']]
+      .map(([k, l]) => `<div class="stat" data-k="${k}"><b>0</b><span>${l}</span></div>`).join('') + '</div></div></section>');
+  $('#projectsGrid').insertAdjacentHTML('beforebegin', '<div class="chip-row" id="projectChips"></div>');
+
+  /* ---------- theme (remembered) ---------- */
+  try { const t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch (e) {}
+  const tb = $('#themeToggle');
+  const icon = () => tb.innerHTML = root.dataset.theme === 'light' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+  icon();
+  tb.onclick = () => { root.dataset.theme = root.dataset.theme === 'light' ? 'dark' : 'light'; try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {} icon(); };
+
+  /* ---------- scroll progress + scrollspy ---------- */
+  addEventListener('scroll', () => {
+    const h = root.scrollHeight - innerHeight;
+    $('#progress').style.transform = `scaleX(${h > 0 ? scrollY / h : 0})`;
+  }, { passive: true });
+  const links = $$('.nav-links a');
+  const spy = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  $$('section[id]').forEach(s => spy.observe(s));
+
+  /* ---------- typewriter roles ---------- */
+  const sub = $('#heroSubtitle');
+  if (sub) {
+    const roles = ['Student', 'Rover Scout', 'Youth Leader', 'Volunteer'];
+    if (reduce) sub.textContent = roles.join(' · ');
+    else {
+      sub.innerHTML = '<span id="tw"></span><span class="caret"></span>';
+      const tw = $('#tw'); let i = 0, j = 0, del = false;
+      (function tick() {
+        const w = roles[i]; tw.textContent = w.slice(0, j);
+        if (!del && j === w.length) { del = true; return setTimeout(tick, 1500); }
+        if (del && j === 0) { del = false; i = (i + 1) % roles.length; }
+        j += del ? -1 : 1; setTimeout(tick, del ? 40 : 90);
+      })();
+    }
+  }
+
+  /* ---------- hero: constellation that reacts to the pointer ---------- */
+  const cv = $('#heroCanvas');
+  if (cv && !reduce) {
+    const c = cv.getContext('2d'); let W, H, P = [], m = { x: -999, y: -999 }, vis = true, col = '#c9a24c', f = 0;
+    const size = () => { W = cv.width = cv.offsetWidth; H = cv.height = cv.offsetHeight;
+      P = Array.from({ length: Math.min(80, Math.floor(W * H / 16000)) }, () => ({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 })); };
+    size(); addEventListener('resize', size);
+    const hero = cv.parentElement;
+    hero.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; });
+    hero.addEventListener('pointerleave', () => m.x = -999);
+    new IntersectionObserver(([e]) => vis = e.isIntersecting).observe(cv);
+    (function draw() {
+      requestAnimationFrame(draw); if (!vis) return;
+      if (f++ % 60 === 0) col = getComputedStyle(root).getPropertyValue('--brass').trim() || col;
+      c.clearRect(0, 0, W, H); c.strokeStyle = col; c.fillStyle = col;
+      P.forEach((p, i) => {
+        const dx = m.x - p.x, dy = m.y - p.y, d = Math.hypot(dx, dy);
+        if (d < 160) { p.vx += dx / d * .006; p.vy += dy / d * .006; }
+        p.vx *= .995; p.vy *= .995; p.x += p.vx; p.y += p.vy;
+        if (p.x < 0 || p.x > W) p.vx *= -1; if (p.y < 0 || p.y > H) p.vy *= -1;
+        c.globalAlpha = .55; c.beginPath(); c.arc(p.x, p.y, 1.6, 0, 6.3); c.fill();
+        for (let k = i + 1; k < P.length; k++) {
+          const q = P[k], dd = Math.hypot(p.x - q.x, p.y - q.y);
+          if (dd < 120) { c.globalAlpha = (1 - dd / 120) * .25; c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(q.x, q.y); c.stroke(); }
+        }
+        if (d < 160) { c.globalAlpha = (1 - d / 160) * .5; c.beginPath(); c.moveTo(p.x, p.y); c.lineTo(m.x, m.y); c.stroke(); }
+      });
+    })();
+    const badge = $('.badge-frame');
+    if (badge && fine) hero.addEventListener('pointermove', e => {
+      const x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      badge.style.transform = `translate(${x * 14}px,${y * 14}px)`; badge.style.transition = 'transform .2s ease-out';
+    });
+  }
+
+  /* ---------- cursor spotlight ---------- */
+  if (fine && !reduce) addEventListener('pointermove', e => { $('#glow').style.transform = `translate(${e.clientX}px,${e.clientY}px)`; }, { passive: true });
+
+  /* ---------- 3D tilt on cards ---------- */
+  if (fine && !reduce) {
+    const sel = '.project-card,.skill-card,.video-card';
+    document.addEventListener('pointermove', e => {
+      const el = e.pointerType === 'mouse' && e.target.closest && e.target.closest(sel); if (!el) return;
+      const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      el.style.transform = `perspective(800px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-6px)`;
+      el.style.setProperty('--gx', (x + .5) * 100 + '%'); el.style.setProperty('--gy', (y + .5) * 100 + '%');
+    });
+    document.addEventListener('pointerout', e => {
+      const el = e.target.closest && e.target.closest(sel);
+      if (el && !el.contains(e.relatedTarget)) el.style.transform = '';
+    });
+  }
+
+  /* ---------- reveal on scroll (also covers cards loaded from Firebase) ---------- */
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .1 });
+  const rvSel = '.section-head,.value-card,.skill-card,.project-card,.website-card,.video-card,.timeline-item,.comment-card,.contact-item,.about-image,.about-text';
+  const watch = r => $$(rvSel, r).forEach((el, i) => { if (el.dataset.rv) return; el.dataset.rv = 1; el.classList.add('rv'); el.style.setProperty('--d', (i % 6) * .07 + 's'); io.observe(el); });
+
+  /* ---------- live stats (count-up) ---------- */
+  const cache = () => window.__cache || {};
+  const countOf = k => {
+    const c = cache()[k];
+    if (Array.isArray(c)) return c.length;
+    const map = { skills: '#skillsContainer .skill-card', projects: '#projectsGrid .project-card', websites: '#websitesContainer .website-card', videos: '#videoGrid .video-card', achievements: '#achievementsTimeline .timeline-item' };
+    return $$(map[k]).length;
+  };
+  const bump = (el, to) => {
+    const from = +el.textContent || 0; if (from === to) return;
+    if (reduce) { el.textContent = to; return; }
+    const t0 = performance.now();
+    (function s(t) { const p = Math.min((t - t0) / 900, 1); el.textContent = Math.round(from + (to - from) * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(s); })(t0);
+  };
+  const stats = () => {
+    let any = false;
+    $$('.stat').forEach(s => { const n = countOf(s.dataset.k); s.style.display = n ? '' : 'none'; if (n) any = true; bump($('b', s), n); });
+    $('#stats').style.display = any ? '' : 'none';
+  };
+
+  /* ---------- project tag filter ---------- */
+  let tag = 'all';
+  const applyFilter = () => $$('#projectsGrid .project-card').forEach(card => {
+    const tags = $$('.project-tag', card).map(t => t.textContent.trim());
+    card.style.display = tag === 'all' || tags.includes(tag) ? '' : 'none';
+  });
+  const buildChips = () => {
+    const src = Array.isArray(cache().projects) ? cache().projects.flatMap(p => p.tags || []) : $$('#projectsGrid .project-tag').map(t => t.textContent.trim());
+    const tags = [...new Set(src)]; const row = $('#projectChips');
+    if (tags.length < 2) { row.innerHTML = ''; return; }
+    if (row.dataset.sig === tags.join('|')) return; row.dataset.sig = tags.join('|');
+    row.innerHTML = ['all', ...tags].map(t => `<button class="chip${t === tag ? ' active' : ''}" data-tag="${t.replace(/"/g, '&quot;')}">${t === 'all' ? 'All' : t.replace(/</g, '&lt;')}</button>`).join('');
+  };
+  $('#projectChips').addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    tag = b.dataset.tag; $$('.chip').forEach(x => x.classList.toggle('active', x === b));
+    const more = $('#loadMoreProjects'); if (tag !== 'all' && more && more.style.display !== 'none') more.click();
+    applyFilter();
+  });
+
+  /* ---------- lightbox ---------- */
+  const lb = $('#lightbox');
+  document.addEventListener('click', e => {
+    const img = e.target.closest && e.target.closest('.project-image img,.timeline-content img'); if (!img) return;
+    $('img', lb).src = img.src; lb.classList.add('open');
+  });
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+  addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+  /* ---------- react to Firebase content arriving ---------- */
+  const refresh = () => { watch(document); stats(); buildChips(); applyFilter(); };
+  const mo = new MutationObserver(() => { clearTimeout(mo.t); mo.t = setTimeout(refresh, 80); });
+  ['#skillsContainer', '#projectsGrid', '#websitesContainer', '#videoGrid', '#achievementsTimeline', '#commentsList']
+    .forEach(s => mo.observe($(s), { childList: true }));
+  refresh();
+})();
+</script>
+
 </body>
 </html>
