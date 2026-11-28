@@ -35,6 +35,7 @@
             --brass-bright: #e9c877;
             --ember: #9a4530;
             --whatsapp: #25D366;
+            --hdr: rgba(10,12,9,0.92);
             --radius: 4px;
             --serif: 'Fraunces', Georgia, serif;
             --sans: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -43,6 +44,7 @@
         html { scroll-behavior: smooth; }
         body { background: var(--bg); color: var(--ink); line-height: 1.65; overflow-x: hidden; }
         ::selection { background: var(--brass); color: #12140d; }
+        img { max-width: 100%; }
         .container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
         section { padding: 110px 0; position: relative; }
         h1, h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.15; color: var(--ink); }
@@ -58,7 +60,7 @@
         .trail-rule .dash { flex: 1; height: 1px; background: repeating-linear-gradient(90deg, var(--line-strong) 0 6px, transparent 6px 12px); }
         .trail-rule i { color: var(--brass); font-size: 0.8rem; }
 
-        .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px; background: var(--brass); color: #16180f; border-radius: 2px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease; border: 1px solid var(--brass); cursor: pointer; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 28px; background: var(--brass); color: #16180f; border-radius: 2px; font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.25s ease; border: 1px solid var(--brass); cursor: pointer; }
         .btn:hover { background: var(--brass-bright); border-color: var(--brass-bright); transform: translateY(-2px); }
         .btn-outline { background: transparent; border: 1px solid var(--line-strong); color: var(--ink); }
         .btn-outline:hover { border-color: var(--brass); color: var(--brass-bright); background: transparent; transform: translateY(-2px); }
@@ -68,15 +70,17 @@
         .btn-load-more:hover { background: var(--brass); color: #16180f; }
         .btn-load-more i { margin-right: 6px; }
 
-        header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: transparent; border-bottom: 1px solid transparent; transition: all 0.35s ease; }
-        header.scrolled { background: rgba(10,12,9,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; }
-        .logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--ink); letter-spacing: 0.2px; }
+        /* ===== HEADER (blur moved to a pseudo-element so the fixed mobile menu is not trapped inside it) ===== */
+        header { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: transparent; }
+        header::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--hdr); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); opacity: 0; transition: opacity 0.35s ease; }
+        header.scrolled::before { opacity: 1; }
+        nav { display: flex; align-items: center; padding: 20px 0; gap: 14px; }
+        .logo { font-family: var(--serif); font-size: 1.15rem; font-weight: 700; color: var(--ink); letter-spacing: 0.2px; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex-shrink: 1; }
         .logo span { color: var(--brass); }
-        .nav-links { display: flex; list-style: none; gap: 34px; }
-        .nav-links a { font-weight: 500; font-size: 0.92rem; text-decoration: none; color: var(--ink-dim); position: relative; padding: 4px 0; transition: color 0.2s; }
+        .nav-links { display: flex; list-style: none; gap: 30px; margin-left: auto; }
+        .nav-links a { font-weight: 500; font-size: 0.92rem; text-decoration: none; color: var(--ink-dim); position: relative; padding: 4px 0; transition: color 0.2s; white-space: nowrap; }
         .nav-links a:hover { color: var(--brass-bright); }
-        .hamburger { display: none; cursor: pointer; flex-direction: column; justify-content: space-between; width: 26px; height: 18px; z-index: 1100; }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; justify-content: space-between; width: 26px; height: 18px; z-index: 1100; flex-shrink: 0; }
         .hamburger span { display: block; height: 2px; width: 100%; background: var(--ink); border-radius: 2px; transition: all 0.3s; }
 
         /* ===== HERO ===== */
@@ -85,18 +89,23 @@
             radial-gradient(ellipse at 85% 80%, rgba(201,162,76,0.10), transparent 55%),
             repeating-linear-gradient(115deg, rgba(232,226,209,0.025) 0px, rgba(232,226,209,0.025) 1px, transparent 1px, transparent 90px),
             var(--bg); }
+        .hero > .container { width: 100%; }
         .hero-content-wrapper { display: flex; align-items: center; gap: 70px; width: 100%; }
-        .hero-content { flex: 1.15; opacity: 0; transform: translateY(18px); animation: riseIn 0.9s ease 0.15s forwards; }
-        .hero-eyebrow { font-family: var(--serif); font-style: italic; color: var(--brass-bright); font-size: 1.05rem; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
+        .hero-content { flex: 1.15; min-width: 0; opacity: 0; transform: translateY(18px); animation: riseIn 0.9s ease 0.15s forwards; }
+        .hero-eyebrow { font-family: var(--serif); font-style: italic; color: var(--brass-bright); font-size: 1.05rem; margin-bottom: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
         .hero-eyebrow i { color: var(--pine-bright); }
-        .hero-content h1 { font-size: clamp(2.6rem, 5.2vw, 4rem); font-weight: 900; letter-spacing: -0.5px; margin-bottom: 20px; }
-        .hero-image { flex: 0.85; display: flex; justify-content: center; opacity: 0; transform: translateY(18px); animation: riseIn 0.9s ease 0.35s forwards; }
+        .hero-content h1 { font-size: clamp(2.3rem, 5.2vw, 4rem); font-weight: 900; letter-spacing: -0.5px; margin-bottom: 20px; }
+        .hero-image { flex: 0.85; min-width: 0; display: flex; justify-content: center; align-items: center; padding: 20px; opacity: 0; transform: translateY(18px); animation: riseIn 0.9s ease 0.35s forwards; }
         .badge-frame { position: relative; width: 320px; max-width: 100%; }
-        .badge-frame::before { content: ''; position: absolute; inset: -14px; border: 1px solid var(--line-strong); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-        .badge-frame img { width: 100%; display: block; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); border: 3px solid var(--brass); background: var(--surface); }
+        /* outer thin hexagon + inner brass hexagon outline (SVG strokes, so they are not clipped away) */
+        .badge-frame::before, .badge-frame::after { content: ''; position: absolute; pointer-events: none; background-repeat: no-repeat; background-size: 100% 100%; z-index: 2; }
+        .badge-frame::before { inset: -16px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpolygon points='50,0.5 99.5,25 99.5,75 50,99.5 0.5,75 0.5,25' fill='none' stroke='%23e8e2d1' stroke-opacity='.25' stroke-width='1' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+        .badge-frame::after { inset: -2px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpolygon points='50,0.5 99.5,25 99.5,75 50,99.5 0.5,75 0.5,25' fill='none' stroke='%23c9a24c' stroke-width='3' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E"); }
+        .badge-frame img { position: relative; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; display: block; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); background: var(--surface); }
         #digital-clock { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: var(--pine-bright); letter-spacing: 1.2px; margin: 4px 0 18px; display: inline-block; border: 1px solid var(--line); padding: 6px 14px; border-radius: 2px; }
-        .hero-content p#heroSubtitle { color: var(--ink-dim); font-size: 1.15rem; max-width: 46ch; margin-bottom: 10px; }
-        .hero-facts { display: flex; flex-wrap: wrap; gap: 0; margin: 22px 0 30px; color: var(--ink-faint); font-size: 0.88rem; }
+        .hero-content p#heroSubtitle { color: var(--ink-dim); font-size: 1.15rem; max-width: 46ch; margin-bottom: 10px; min-height: 1.7em; }
+        .hero-content > p:not(#heroSubtitle) { max-width: 52ch; }
+        .hero-facts { display: flex; flex-wrap: wrap; row-gap: 8px; margin: 22px 0 30px; color: var(--ink-faint); font-size: 0.88rem; }
         .hero-facts span { padding-right: 16px; margin-right: 16px; border-right: 1px solid var(--line); }
         .hero-facts span:last-child { border-right: none; }
         .hero-facts i { color: var(--brass); margin-right: 6px; }
@@ -107,20 +116,21 @@
         /* ===== ABOUT ===== */
         .about { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
         .about-content { display: flex; align-items: flex-start; gap: 60px; }
-        .about-image { flex: 0.8; border-radius: 50%; overflow: hidden; border: 1px solid var(--line-strong); padding: 8px; position: relative; }
+        .about-image { flex: 0 0 min(360px, 34%); aspect-ratio: 1 / 1; border-radius: 50%; overflow: hidden; border: 1px solid var(--line-strong); padding: 8px; position: relative; }
         .about-image::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px dashed var(--brass); margin: 2px; pointer-events: none; }
-        .about-image img { width: 100%; display: block; border-radius: 50%; filter: grayscale(15%); }
-        .about-text { flex: 1.2; }
+        .about-image img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 50%; filter: grayscale(15%); }
+        .about-text { flex: 1; min-width: 0; }
         .about-text .kicker { display: block; font-family: var(--serif); font-style: italic; color: var(--brass); margin-bottom: 8px; }
-        .personal-info { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 24px; margin: 24px 0 28px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--brass); }
-        .info-item { display: flex; align-items: center; gap: 12px; font-size: 0.93rem; color: var(--ink); }
-        .info-item i { color: var(--pine-bright); width: 16px; text-align: center; }
+        .personal-info { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 24px; margin: 24px 0 28px; padding: 22px 24px; background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--brass); }
+        .info-item { display: flex; align-items: center; gap: 12px; font-size: 0.93rem; color: var(--ink); min-width: 0; }
+        .info-item span { min-width: 0; overflow-wrap: anywhere; }
+        .info-item i { color: var(--pine-bright); width: 16px; text-align: center; flex-shrink: 0; }
         .focus-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 4px; }
         .focus-tag { border: 1px solid var(--line-strong); color: var(--ink-dim); padding: 7px 16px; font-size: 0.82rem; border-radius: 20px; }
 
         /* ===== VALUES STRIP ===== */
         .values { background: var(--bg); }
-        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
         .value-card { background: var(--bg); padding: 34px 28px; }
         .value-card .num { font-family: var(--serif); font-style: italic; color: var(--brass); font-size: 1.5rem; display: block; margin-bottom: 14px; }
         .value-card h4 { font-family: var(--serif); font-size: 1.15rem; margin-bottom: 8px; color: var(--ink); }
@@ -128,60 +138,61 @@
 
         /* ===== SKILLS ===== */
         .skills { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .skills-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; }
         .skill-card { background: var(--surface); padding: 30px; border: 1px solid var(--line); border-top: 2px solid var(--brass); transition: border-color 0.25s, transform 0.25s; }
         .skill-card:hover { border-color: var(--line-strong); border-top-color: var(--brass-bright); transform: translateY(-4px); }
         .skill-card i { font-size: 1.8rem; color: var(--pine-bright); margin-bottom: 18px; display: block; }
         .skill-card h3 { font-size: 1.15rem; margin-bottom: 8px; }
         .skill-progress { height: 4px; background: rgba(255,255,255,0.06); border-radius: 3px; margin: 16px 0 8px; overflow: hidden; }
         .skill-progress-bar { height: 100%; background: linear-gradient(90deg, var(--pine), var(--brass)); border-radius: 3px; width: 0; transition: width 1.4s ease; }
-        .skill-level { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--ink-faint); }
+        .skill-level { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--ink-faint); margin-top: 16px; }
+        .skill-level + .skill-progress { margin-top: 8px; }
 
         /* ===== PROJECTS ===== */
         .projects { background: var(--bg); }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
-        .project-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; transition: transform 0.3s, border-color 0.3s; }
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 28px; }
+        .project-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; transition: transform 0.3s, border-color 0.3s; display: flex; flex-direction: column; }
         .project-card:hover { transform: translateY(-6px); border-color: var(--line-strong); }
-        .project-image { height: 200px; overflow: hidden; border-bottom: 1px solid var(--line); }
-        .project-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) contrast(1.05); transition: transform 0.6s; }
+        .project-image { height: 200px; overflow: hidden; border-bottom: 1px solid var(--line); flex-shrink: 0; }
+        .project-image img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.85) contrast(1.05); transition: transform 0.6s; display: block; }
         .project-card:hover .project-image img { transform: scale(1.07); }
-        .project-content { padding: 26px; }
+        .project-content { padding: 26px; display: flex; flex-direction: column; flex: 1; }
         .project-content h3 { font-size: 1.2rem; margin-bottom: 8px; }
         .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
         .project-tag { border: 1px solid var(--line-strong); color: var(--brass-bright); padding: 5px 13px; font-size: 0.76rem; font-weight: 600; }
-        .project-link { color: var(--pine-bright); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; }
+        .project-link { color: var(--pine-bright); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; margin-top: auto; align-self: flex-start; }
         .project-link:hover { color: var(--brass-bright); }
 
         /* ===== WEBSITES ===== */
         .websites { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-        .websites-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 36px; }
-        .website-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
-        .website-preview { height: 300px; background: #0e100b; position: relative; overflow: hidden; }
+        .websites-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr)); gap: 36px; }
+        .website-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column; }
+        .website-preview { height: 300px; background: #0e100b; position: relative; overflow: hidden; flex-shrink: 0; }
         .website-preview iframe { width: 100%; height: calc(100% - 30px); border: none; margin-top: 30px; }
-        .website-preview:before { content: '● ● ●'; position: absolute; top: 0; left: 12px; width: 100%; height: 30px; line-height: 30px; letter-spacing: 4px; font-size: 8px; color: var(--ink-faint); background: #14170f; z-index: 2; border-bottom: 1px solid var(--line); }
-        .website-content { padding: 26px; }
+        .website-preview:before { content: '● ● ●'; position: absolute; top: 0; left: 0; padding-left: 12px; width: 100%; height: 30px; line-height: 30px; letter-spacing: 4px; font-size: 8px; color: var(--ink-faint); background: #14170f; z-index: 2; border-bottom: 1px solid var(--line); }
+        .website-content { padding: 26px; display: flex; flex-direction: column; flex: 1; align-items: flex-start; }
         .website-content h3 { font-size: 1.15rem; margin-bottom: 8px; }
-        .website-link { color: var(--pine-bright); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; }
+        .website-link { color: var(--pine-bright); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 0.92rem; margin-top: auto; padding-top: 14px; }
         .website-link:hover { color: var(--brass-bright); }
 
         /* ===== VIDEOS ===== */
         .video-portfolio { background: var(--bg); }
-        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 28px; }
-        .video-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; transition: transform 0.3s; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 28px; }
+        .video-card { background: var(--surface); border: 1px solid var(--line); overflow: hidden; transition: transform 0.3s; display: flex; flex-direction: column; }
         .video-card:hover { transform: translateY(-6px); }
         .video-card.featured { border-color: var(--brass); }
-        .video-thumbnail { position: relative; padding-bottom: 56.25%; background: #000; cursor: pointer; overflow: hidden; }
+        .video-thumbnail { position: relative; padding-bottom: 56.25%; background: #000; cursor: pointer; overflow: hidden; flex-shrink: 0; }
         .video-thumbnail img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
-        .video-card:hover .video-thumbnail img { transform: scale(1.05); }
         .video-thumbnail iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .play-button { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56px; height: 56px; background: rgba(10,12,9,0.75); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--brass-bright); font-size: 1.3rem; z-index: 2; border: 2px solid var(--brass); transition: all 0.3s; }
+        .video-card:hover .video-thumbnail img { transform: scale(1.05); }
         .video-card:hover .play-button { background: var(--brass); color: #16180f; transform: translate(-50%,-50%) scale(1.1); }
         .platform-badge { position: absolute; top: 10px; right: 10px; padding: 5px 12px; border-radius: 2px; color: white; font-size: 0.75rem; font-weight: 600; z-index: 3; display: flex; align-items: center; gap: 5px; }
         .platform-youtube { background: #b3001b; }
         .platform-facebook { background: #12488a; }
-        .video-content { padding: 22px; }
+        .video-content { padding: 22px; display: flex; flex-direction: column; flex: 1; align-items: flex-start; }
         .video-content h3 { font-size: 1.05rem; margin-bottom: 6px; }
-        .video-meta { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--ink-faint); }
+        .video-meta { display: flex; justify-content: space-between; align-self: stretch; margin-top: 15px; padding-top: 15px; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--ink-faint); }
         .video-link { color: var(--pine-bright); font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 0.88rem; }
         .video-filters { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
         .filter-btn { padding: 9px 20px; border: 1px solid var(--line-strong); background: transparent; color: var(--ink-dim); border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.25s; }
@@ -192,7 +203,7 @@
         .featured-video-player img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .featured-video-info { padding: 28px; }
 
-        /* ===== ACHIEVEMENTS TIMELINE (trail path) ===== */
+        /* ===== ACHIEVEMENTS TIMELINE ===== */
         .achievements { background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
         .timeline { position: relative; max-width: 820px; margin: 0 auto; }
         .timeline:before { content: ''; position: absolute; left: 50%; transform: translateX(-50%); width: 1px; height: 100%; background: repeating-linear-gradient(180deg, var(--line-strong) 0 8px, transparent 8px 16px); }
@@ -203,7 +214,8 @@
         .timeline-item:nth-child(odd):before { right: -6px; }
         .timeline-item:nth-child(even):before { left: -6px; }
         .timeline-content { background: var(--surface); padding: 24px; border: 1px solid var(--line); }
-        .timeline-content img { width: 100%; max-width: 280px; margin: 12px 0; border: 1px solid var(--line); }
+        .timeline-content img { display: block; width: 100%; max-width: 280px; margin: 12px 0; border: 1px solid var(--line); }
+        .timeline-item:nth-child(odd) .timeline-content img { margin-left: auto; }
         .timeline-date { font-family: var(--serif); font-style: italic; font-weight: 600; color: var(--brass-bright); margin-bottom: 10px; }
         .timeline-content h3 { font-size: 1.1rem; margin-bottom: 6px; }
 
@@ -213,61 +225,67 @@
         .comment-form-wrapper { background: var(--surface); padding: 32px; border: 1px solid var(--line); border-top: 2px solid var(--pine); margin-bottom: 48px; }
         .comment-form-wrapper h3 { margin-bottom: 22px; font-size: 1.3rem; display: flex; align-items: center; gap: 10px; }
         .comment-form-wrapper h3 i { color: var(--brass); }
+        .comment-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 15px; }
         .comment-card { background: var(--surface); padding: 24px; border: 1px solid var(--line); margin-bottom: 16px; border-left: 2px solid var(--pine); transition: border-color 0.25s; }
         .comment-card:hover { border-left-color: var(--brass); }
         .comment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-        .comment-author { display: flex; align-items: center; gap: 12px; }
-        .comment-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--brass); display: flex; align-items: center; justify-content: center; color: var(--brass-bright); font-weight: 700; font-family: var(--serif); font-size: 1.05rem; }
-        .comment-author-info h4 { font-family: var(--sans); font-weight: 600; margin-bottom: 2px; font-size: 0.98rem; color: var(--ink); }
+        .comment-author { display: flex; align-items: center; gap: 12px; min-width: 0; }
+        .comment-avatar { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: var(--surface-2); border: 1px solid var(--brass); display: flex; align-items: center; justify-content: center; color: var(--brass-bright); font-weight: 700; font-family: var(--serif); font-size: 1.05rem; }
+        .comment-author-info h4 { font-family: var(--sans); font-weight: 600; margin-bottom: 2px; font-size: 0.98rem; color: var(--ink); overflow-wrap: anywhere; }
         .comment-author-info small { color: var(--ink-faint); font-size: 0.78rem; }
         .comment-date { color: var(--ink-faint); font-size: 0.78rem; }
-        .comment-message { color: var(--ink-dim); line-height: 1.6; margin-top: 8px; }
+        .comment-message { color: var(--ink-dim); line-height: 1.6; margin-top: 8px; overflow-wrap: anywhere; white-space: pre-line; }
         .comment-subject { display: inline-block; border: 1px solid var(--line-strong); color: var(--brass-bright); padding: 3px 12px; font-size: 0.72rem; font-weight: 600; margin-bottom: 10px; }
         .no-comments { text-align: center; padding: 50px 20px; color: var(--ink-faint); border: 1px dashed var(--line-strong); }
         .no-comments i { font-size: 2.4rem; margin-bottom: 14px; display: block; color: var(--line-strong); }
         .comment-count { text-align: center; margin-bottom: 30px; font-size: 1rem; color: var(--ink-dim); }
         .comment-count span { font-family: var(--serif); font-weight: 700; color: var(--brass-bright); font-size: 1.4rem; }
 
-        /* ===== FORMS (shared) ===== */
+        /* ===== FORMS ===== */
         .form-group { margin-bottom: 18px; }
         .form-control { width: 100%; padding: 14px 16px; background: var(--bg-alt); border: 1px solid var(--line-strong); border-radius: 2px; color: var(--ink); font-size: 0.96rem; font-family: var(--sans); }
         .form-control::placeholder { color: var(--ink-faint); }
         .form-control:focus { border-color: var(--brass); outline: none; }
-        textarea.form-control { min-height: 130px; resize: vertical; }
+        textarea.form-control { min-height: 130px; resize: vertical; display: block; }
         .form-message { padding: 12px 20px; border-radius: 2px; text-align: left; font-weight: 600; display: none; margin-top: 6px; margin-bottom: 14px; font-size: 0.9rem; }
         .form-success { background: rgba(58,138,84,0.14); color: var(--pine-bright); border: 1px solid rgba(90,152,115,0.3); }
         .form-error { background: rgba(154,69,48,0.16); color: #e2917c; border: 1px solid rgba(154,69,48,0.35); }
 
         /* ===== CONTACT ===== */
         .contact { background: var(--bg-alt); border-top: 1px solid var(--line); }
-        .contact-container { display: flex; gap: 60px; }
-        .contact-info { flex: 1; }
+        .contact-container { display: flex; gap: 60px; align-items: flex-start; }
+        .contact-info, .contact-form { flex: 1; min-width: 0; }
         .contact-info h3 { font-size: 1.4rem; margin-bottom: 10px; }
-        .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+        .contact-info > p { margin-bottom: 28px; }
+        .contact-item { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; min-width: 0; }
+        .contact-item > div:last-child { min-width: 0; overflow-wrap: anywhere; }
         .contact-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; color: var(--brass-bright); flex-shrink: 0; }
         .contact-item h4 { font-family: var(--sans); font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 2px; }
         .contact-item a { text-decoration: none; }
         .contact-item a:hover { color: var(--brass-bright); }
-        .contact-form { flex: 1; }
         .contact-form h3 { font-size: 1.4rem; margin-bottom: 10px; }
-        .social-links { display: flex; gap: 12px; margin-top: 24px; }
+        .contact-form .note { font-size: 0.88rem; margin-bottom: 20px; }
+        .contact-form .note i { color: var(--brass); margin-right: 4px; }
+        .contact-form .btn { width: 100%; }
+        .social-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
         .social-link { width: 40px; height: 40px; border-radius: 50%; background: var(--surface); border: 1px solid var(--line-strong); display: flex; align-items: center; justify-content: center; color: var(--ink-dim); text-decoration: none; transition: all 0.25s; }
         .social-link:hover { border-color: var(--brass); color: var(--brass-bright); transform: translateY(-3px); }
         .social-link.whatsapp-link { border-color: rgba(37,211,102,0.35); color: var(--whatsapp); }
         .social-link.whatsapp-link:hover { border-color: var(--whatsapp); background: rgba(37,211,102,0.1); }
 
-        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; width: 58px; height: 58px; background: var(--whatsapp); color: #04220f; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 10px 30px rgba(37,211,102,0.35); z-index: 999; transition: all 0.3s; cursor: pointer; text-decoration: none; }
+        .whatsapp-float { position: fixed; bottom: 30px; left: 30px; width: 58px; height: 58px; background: var(--whatsapp); color: #04220f; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 10px 30px rgba(37,211,102,0.35); z-index: 999; transition: transform 0.3s; cursor: pointer; text-decoration: none; }
         .whatsapp-float:hover { transform: scale(1.08); }
         @media (prefers-reduced-motion: no-preference) { .whatsapp-float { animation: pulse 2.4s infinite; } }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); } 70% { box-shadow: 0 0 0 18px rgba(37,211,102,0); } 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); } }
 
         footer { background: #080906; color: var(--ink-dim); padding: 70px 0 24px; border-top: 1px solid var(--line); }
         .footer-content { display: flex; justify-content: space-between; gap: 40px; margin-bottom: 48px; flex-wrap: wrap; }
-        .footer-column { flex: 1; min-width: 200px; }
+        .footer-column { flex: 1; min-width: 200px; overflow-wrap: anywhere; }
         .footer-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--ink); margin-bottom: 14px; }
         .footer-column h4 { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 18px; letter-spacing: 0.3px; }
         .footer-column ul { list-style: none; }
         .footer-column ul li { margin-bottom: 12px; font-size: 0.9rem; }
+        .footer-column ul li i { color: var(--brass); width: 18px; text-align: center; margin-right: 4px; }
         .footer-column ul li a { color: var(--ink-dim); text-decoration: none; }
         .footer-column ul li a:hover { color: var(--brass-bright); }
         .copyright { text-align: center; padding-top: 24px; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--ink-faint); }
@@ -281,38 +299,53 @@
         .spinner { width: 44px; height: 44px; border: 3px solid rgba(201,162,76,0.2); border-radius: 50%; border-top-color: var(--brass); animation: spin 0.9s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 992px) {
-            .hero-content-wrapper { flex-direction: column-reverse; text-align: center; }
+            .hero-content-wrapper { flex-direction: column-reverse; text-align: center; gap: 36px; }
+            .hero-eyebrow { justify-content: center; }
+            .hero-content p#heroSubtitle, .hero-content > p:not(#heroSubtitle) { margin-left: auto; margin-right: auto; }
             .hero-facts { justify-content: center; }
+            .hero-facts span { border-right: none; margin: 0; padding: 0 10px; }
             .hero-btns { justify-content: center; }
             .badge-frame { width: 260px; }
-            .about-content { flex-direction: column; }
-            .about-image { width: 220px; margin: 0 auto; }
-            .contact-container { flex-direction: column; }
+            .about-content { flex-direction: column; align-items: stretch; gap: 40px; }
+            .about-image { flex: none; width: 240px; margin: 0 auto; }
+            .contact-container { flex-direction: column; gap: 48px; align-items: stretch; }
             .timeline:before { left: 20px; }
             .timeline-item { width: 100%; padding-left: 50px; padding-right: 0; text-align: left !important; }
             .timeline-item:nth-child(even) { left: 0; }
-            .timeline-item:before { left: 10px !important; }
+            .timeline-item:before { left: 14px !important; right: auto !important; }
+            .timeline-item:nth-child(odd) .timeline-content img { margin-left: 0; }
         }
         @media (max-width: 768px) {
-            .nav-links { position: fixed; top: 0; right: -100%; width: 78%; height: 100vh; background: var(--bg-alt); border-left: 1px solid var(--line); flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; padding-left: 40px; transition: all 0.35s; z-index: 1000; }
+            .nav-links { position: fixed; top: 0; right: -100%; width: 78%; height: 100vh; background: var(--bg-alt); border-left: 1px solid var(--line); flex-direction: column; align-items: flex-start; justify-content: center; gap: 8px; padding-left: 40px; margin-left: 0; transition: right 0.35s; z-index: 1000; }
             .nav-links.active { right: 0; }
             .nav-links li { margin: 12px 0; }
+            .nav-links a { font-size: 1.05rem; }
             .hamburger { display: flex; }
             .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
             .hamburger.active span:nth-child(2) { opacity: 0; }
             .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+            .logo { font-size: 1rem; }
             .personal-info { grid-template-columns: 1fr; }
             .projects-grid, .video-grid { grid-template-columns: 1fr; }
             section { padding: 76px 0; }
+            .section-head { margin-bottom: 40px; }
+            .comment-form-wrapper { padding: 22px; }
+            .comment-row { grid-template-columns: 1fr; }
+            .website-preview { height: 240px; }
             .whatsapp-float { bottom: 90px; left: 20px; width: 50px; height: 50px; font-size: 1.5rem; }
+            .scroll-top { right: 20px; bottom: 24px; }
+            .footer-content { text-align: center; }
+            .footer-column { min-width: 100%; }
+            .hero-btns .btn { flex: 1 1 100%; }
         }
     </style>
 </head>
 <body>
     <div class="loading" id="loading"><div class="spinner"></div></div>
 
-    <a href="https://wa.me/8801612018221?text=Hello%20Md.%20Ashfaqur%20Rahman%20Tanim!%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20connect." class="whatsapp-float" target="_blank" title="Chat on WhatsApp">
+    <a href="https://wa.me/8801612018221?text=Hello%20Md.%20Ashfaqur%20Rahman%20Tanim!%20I%20visited%20your%20portfolio%20and%20would%20like%20to%20connect." class="whatsapp-float" target="_blank" rel="noopener" title="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -336,7 +369,7 @@
         </div>
     </header>
 
-    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+    <button class="scroll-top" id="scrollTop" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
     <section class="hero" id="home">
         <div class="container">
@@ -356,12 +389,12 @@
                         <a href="#contact" class="btn">Get In Touch</a>
                         <a href="#videos" class="btn btn-outline">View Videos</a>
                         <a href="#projects" class="btn btn-outline">View Projects</a>
-                        <a href="https://wa.me/8801612018221?text=Hi%20Tanim!%20I%20saw%20your%20portfolio." class="btn btn-whatsapp" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://wa.me/8801612018221?text=Hi%20Tanim!%20I%20saw%20your%20portfolio." class="btn btn-whatsapp" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                     </div>
                 </div>
                 <div class="hero-image">
                     <div class="badge-frame">
-                        <img id="heroImage" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhCDeXufBywGlGcvjFv5OaZNnGnIFboYZgUyo9NPcDt7SH5dWhG6Kv7wOtGMm5uBfA-2RCI41U0IWscQhEPQ9_6mHg192N68FaFDDE4HIfb8zXw6Ubafj329ToS6mYTqHo8Wu8aRidwjczDQZ4Id_t7K-E32b8ZthoHTIH3r86pWwfOmFdNvgcQOOeHBDc/s2000/1000038033.png" alt="Tanim">
+                        <img id="heroImage" src="https://i.ibb.co/cS3vSkrk/1000029575.jpg" alt="Tanim">
                     </div>
                 </div>
             </div>
@@ -490,7 +523,7 @@
                 <div class="comment-form-wrapper">
                     <h3><i class="fas fa-comment-dots"></i> Leave a Comment</h3>
                     <form id="commentForm">
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;">
+                        <div class="comment-row">
                             <div class="form-group">
                                 <input type="text" id="commentName" class="form-control" placeholder="Your Name *" required>
                             </div>
@@ -540,21 +573,21 @@
                     <div class="contact-item"><div class="contact-icon"><i class="fas fa-envelope"></i></div><div><h4>Email</h4><p><a href="mailto:rovermdashfaq@gmail.com">rovermdashfaq@gmail.com</a></p></div></div>
                     <div class="contact-item"><div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div><div><h4>Location</h4><p>Kishoreganj, Bangladesh</p></div></div>
                     <div class="social-links">
-                        <a href="https://www.facebook.com/MD.Ashfaq01" class="social-link" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.instagram.com/md.ashfaq01" class="social-link" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" class="social-link" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="https://www.youtube.com/@md.ashfaq01" class="social-link" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://wa.me/8801612018221" class="social-link whatsapp-link" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.facebook.com/MD.Ashfaq01" class="social-link" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/md.ashfaq01" class="social-link" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/md-ashfaqur-rahman-tanim-407805290" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.youtube.com/@md.ashfaq01" class="social-link" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="https://wa.me/8801612018221" class="social-link whatsapp-link" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                     <div style="margin-top:24px;">
-                        <a href="https://wa.me/8801612018221?text=Hello%20Tanim!%20I'd%20like%20to%20connect%20with%20you." class="btn btn-whatsapp" target="_blank">
+                        <a href="https://wa.me/8801612018221?text=Hello%20Tanim!%20I'd%20like%20to%20connect%20with%20you." class="btn btn-whatsapp" target="_blank" rel="noopener">
                             <i class="fab fa-whatsapp"></i> Chat on WhatsApp
                         </a>
                     </div>
                 </div>
                 <div class="contact-form">
                     <h3>Send Message to WhatsApp</h3>
-                    <p style="font-size:0.88rem;margin-bottom:20px;">
+                    <p class="note">
                         <i class="fas fa-info-circle"></i> Your message will be sent directly to my WhatsApp
                     </p>
                     <form id="contactForm">
@@ -579,9 +612,9 @@
             <div class="footer-content">
                 <div class="footer-column"><div class="footer-logo">Ashfaqur Rahman Tanim</div><p>Rover Mate at Gurudayal Govt. College Rover Scout Group.</p></div>
                 <div class="footer-column"><h4>Quick Links</h4><ul><li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#videos">Videos</a></li><li><a href="#comments">Comments</a></li><li><a href="#contact">Contact</a></li></ul></div>
-                <div class="footer-column"><h4>Contact</h4><ul><li><i class="fab fa-whatsapp"></i> <a href="https://wa.me/8801612018221">+880 1612-018221</a></li><li><i class="fas fa-envelope"></i> mdashfaqurrahmantanim@gmail.com</li><li><i class="fas fa-map-marker-alt"></i> Kishoreganj, Bangladesh</li></ul></div>
+                <div class="footer-column"><h4>Contact</h4><ul><li><i class="fab fa-whatsapp"></i><a href="https://wa.me/8801612018221">+880 1612-018221</a></li><li><i class="fas fa-envelope"></i>mdashfaqurrahmantanim@gmail.com</li><li><i class="fas fa-map-marker-alt"></i>Kishoreganj, Bangladesh</li></ul></div>
             </div>
-            <div class="copyright"><p>&copy; 2025 Md. Ashfaqur Rahman Tanim. All Rights Reserved.</p></div>
+            <div class="copyright"><p>&copy; <span id="year">2026</span> Md. Ashfaqur Rahman Tanim. All Rights Reserved.</p></div>
         </div>
     </footer>
 
@@ -602,6 +635,9 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // escape user-submitted text before putting it into innerHTML
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
         function hideLoading() { setTimeout(() => document.getElementById('loading').classList.add('hidden'), 500); }
 
         function updateClock() {
@@ -620,30 +656,31 @@
             document.querySelectorAll('.nav-links a').forEach(link => link.addEventListener('click', () => { hamburger.classList.remove('active'); navLinks.classList.remove('active'); }));
             document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', function(e) {
                 e.preventDefault();
-                const el = document.querySelector(this.getAttribute('href'));
-                if (el) window.scrollTo({ top: el.offsetTop-80, behavior:'smooth' });
+                const id = this.getAttribute('href');
+                if (id === '#') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+                const el = document.querySelector(id);
+                if (el) window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 70, behavior: 'smooth' });
             }));
             const scrollTop = document.getElementById('scrollTop');
-            window.addEventListener('scroll', () => {
+            const onScroll = () => {
                 scrollTop.classList.toggle('active', window.scrollY>500);
                 header.classList.toggle('scrolled', window.scrollY>40);
-            });
+            };
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
             scrollTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
         }
 
-        // ===== DATA CACHE =====
-        const cachedData = {
-            projects: null,
-            websites: null,
-            videos: null,
-            achievements: null
-        };
+        // ===== DATA CACHE (also shared with the enhancement script for accurate stats/filters) =====
+        const cachedData = { projects: null, websites: null, videos: null, achievements: null, skills: null };
+        window.__cache = cachedData;
 
         // ===== SKILLS =====
         async function loadSkills() {
             const container = document.getElementById('skillsContainer');
             try {
                 const snap = await getDocs(query(collection(db, 'skills'), orderBy('createdAt','desc')));
+                cachedData.skills = snap.docs.map(d => d.data());
                 if (snap.empty) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">No skills added yet.</p>'; return; }
                 let html = '';
                 snap.forEach(doc => {
@@ -652,7 +689,7 @@
                 });
                 container.innerHTML = html;
                 setTimeout(() => document.querySelectorAll('.skill-progress-bar').forEach(b => b.style.width = b.dataset.width), 500);
-            } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading skills.</p>'; }
+            } catch (e) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">Error loading skills.</p>'; }
         }
 
         // ===== PROJECTS =====
@@ -674,7 +711,7 @@
                 
                 let html = '';
                 toShow.forEach(p => {
-                    html += `<div class="project-card"><div class="project-image"><img src="${p.imageBase64||'https://via.placeholder.com/400x200'}" alt="${p.title}"></div><div class="project-content"><h3>${p.title}</h3><p>${p.description||''}</p><div class="project-tags">${(p.tags||[]).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>${p.link?`<a href="${p.link}" class="project-link" target="_blank">View Project <i class="fas fa-arrow-right"></i></a>`:''}</div></div>`;
+                    html += `<div class="project-card"><div class="project-image"><img src="${p.imageBase64||'https://via.placeholder.com/400x200'}" alt="${p.title}"></div><div class="project-content"><h3>${p.title}</h3><p>${p.description||''}</p><div class="project-tags">${(p.tags||[]).map(t=>`<span class="project-tag">${t}</span>`).join('')}</div>${p.link?`<a href="${p.link}" class="project-link" target="_blank" rel="noopener">View Project <i class="fas fa-arrow-right"></i></a>`:''}</div></div>`;
                 });
                 container.innerHTML = html;
                 
@@ -684,7 +721,7 @@
                 } else {
                     loadMoreBtn.style.display = 'none';
                 }
-            } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading projects.</p>'; }
+            } catch (e) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">Error loading projects.</p>'; }
         }
 
         // ===== WEBSITES =====
@@ -706,7 +743,7 @@
                 
                 let html = '';
                 toShow.forEach(w => {
-                    html += `<div class="website-card"><div class="website-preview">${w.iframeUrl?`<iframe src="${w.iframeUrl}" loading="lazy"></iframe>`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-faint);"><i class="fas fa-globe" style="font-size:2.6rem;"></i></div>`}</div><div class="website-content"><h3>${w.title}</h3><p>${w.description||''}</p><a href="${w.url||'#'}" class="website-link" target="_blank">Visit <i class="fas fa-external-link-alt"></i></a></div></div>`;
+                    html += `<div class="website-card"><div class="website-preview">${w.iframeUrl?`<iframe src="${w.iframeUrl}" loading="lazy"></iframe>`:`<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink-faint);"><i class="fas fa-globe" style="font-size:2.6rem;"></i></div>`}</div><div class="website-content"><h3>${w.title}</h3><p>${w.description||''}</p><a href="${w.url||'#'}" class="website-link" target="_blank" rel="noopener">Visit <i class="fas fa-external-link-alt"></i></a></div></div>`;
                 });
                 container.innerHTML = html;
                 
@@ -716,7 +753,7 @@
                 } else {
                     loadMoreBtn.style.display = 'none';
                 }
-            } catch (e) { container.innerHTML = '<p style="text-align:center;">Error loading websites.</p>'; }
+            } catch (e) { container.innerHTML = '<p style="text-align:center;grid-column:1/-1;">Error loading websites.</p>'; }
         }
 
         // ===== VIDEOS =====
@@ -738,7 +775,7 @@
                 
                 const featured = all.find(v => v.featured);
                 if (featured) {
-                    featuredEl.innerHTML = `<h3 style="text-align:center;margin-bottom:25px;color:var(--brass-bright);font-family:var(--serif);"><i class="fas fa-star"></i> Featured Video</h3><div class="featured-video-container"><div class="featured-video-player">${featured.platform==='youtube'?`<iframe src="https://www.youtube.com/embed/${featured.embedId}" allowfullscreen></iframe>`:`<img src="${featured.thumbnailBase64||'https://via.placeholder.com/800x450'}">`}</div><div class="featured-video-info"><h3>${featured.title}</h3><p>${featured.description||''}</p><a href="${featured.url}" target="_blank" class="video-link"><i class="fab fa-${featured.platform}"></i> Watch on ${featured.platform==='youtube'?'YouTube':'Facebook'}</a></div></div>`;
+                    featuredEl.innerHTML = `<h3 style="text-align:center;margin-bottom:25px;color:var(--brass-bright);font-family:var(--serif);"><i class="fas fa-star"></i> Featured Video</h3><div class="featured-video-container"><div class="featured-video-player">${featured.platform==='youtube'?`<iframe src="https://www.youtube.com/embed/${featured.embedId}" allowfullscreen></iframe>`:`<img src="${featured.thumbnailBase64||'https://via.placeholder.com/800x450'}">`}</div><div class="featured-video-info"><h3>${featured.title}</h3><p>${featured.description||''}</p><a href="${featured.url}" target="_blank" rel="noopener" class="video-link"><i class="fab fa-${featured.platform}"></i> Watch on ${featured.platform==='youtube'?'YouTube':'Facebook'}</a></div></div>`;
                 } else { featuredEl.innerHTML = ''; }
                 
                 const filtered = category==='all' ? all : all.filter(v=>v.category===category);
@@ -747,7 +784,7 @@
                 
                 let html = '';
                 toShow.forEach(v => {
-                    html += `<div class="video-card${v.featured?' featured':''}"><div class="video-thumbnail" onclick="${v.platform==='youtube'?`playYouTube(this,'${v.embedId}')`:`window.open('${v.url}','_blank')`}"><span class="platform-badge platform-${v.platform}"><i class="fab fa-${v.platform}"></i> ${v.platform==='youtube'?'YouTube':'Facebook'}</span>${v.platform==='youtube'?`<img src="https://img.youtube.com/vi/${v.embedId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.embedId}/hqdefault.jpg'"><div class="play-button"><i class="fas fa-play"></i></div>`:`<img src="${v.thumbnailBase64||'https://via.placeholder.com/640x360'}"><div class="play-button"><i class="fas fa-external-link-alt"></i></div>`}</div><div class="video-content"><h3>${v.title}</h3><p>${(v.description||'').substring(0,100)}</p><div class="video-meta"><span><i class="fas fa-tag"></i> ${v.category}</span><span><i class="fas fa-eye"></i> ${v.views||0}</span></div><a href="${v.url}" target="_blank" class="video-link"><i class="fab fa-${v.platform}"></i> Watch</a></div></div>`;
+                    html += `<div class="video-card${v.featured?' featured':''}"><div class="video-thumbnail" onclick="${v.platform==='youtube'?`playYouTube(this,'${v.embedId}')`:`window.open('${v.url}','_blank')`}"><span class="platform-badge platform-${v.platform}"><i class="fab fa-${v.platform}"></i> ${v.platform==='youtube'?'YouTube':'Facebook'}</span>${v.platform==='youtube'?`<img src="https://img.youtube.com/vi/${v.embedId}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.embedId}/hqdefault.jpg'"><div class="play-button"><i class="fas fa-play"></i></div>`:`<img src="${v.thumbnailBase64||'https://via.placeholder.com/640x360'}"><div class="play-button"><i class="fas fa-external-link-alt"></i></div>`}</div><div class="video-content"><h3>${v.title}</h3><p>${(v.description||'').substring(0,100)}</p><div class="video-meta"><span><i class="fas fa-tag"></i> ${v.category}</span><span><i class="fas fa-eye"></i> ${v.views||0}</span></div><a href="${v.url}" target="_blank" rel="noopener" class="video-link"><i class="fab fa-${v.platform}"></i> Watch</a></div></div>`;
                 });
                 grid.innerHTML = html || '<p style="text-align:center;grid-column:1/-1;">No videos in this category.</p>';
                 
@@ -757,7 +794,7 @@
                 } else {
                     loadMoreBtn.style.display = 'none';
                 }
-            } catch (e) { grid.innerHTML = '<p style="text-align:center;">Error loading videos.</p>'; }
+            } catch (e) { grid.innerHTML = '<p style="text-align:center;grid-column:1/-1;">Error loading videos.</p>'; }
         }
 
         window.playYouTube = function(el, id) {
@@ -823,7 +860,7 @@
             } catch (e) { console.error('Error loading about:', e); }
         }
 
-        // ===== COMMENTS =====
+        // ===== COMMENTS (user text is escaped; visitor emails are no longer shown publicly) =====
         async function loadComments() {
             const commentsList = document.getElementById('commentsList');
             const commentCount = document.getElementById('commentCountNumber');
@@ -839,7 +876,7 @@
                 let html = '';
                 snap.forEach(doc => {
                     const c = doc.data();
-                    const initial = (c.name || 'A').charAt(0).toUpperCase();
+                    const initial = esc((c.name || 'A').trim().charAt(0).toUpperCase() || 'A');
                     const date = c.createdAt ? new Date(c.createdAt.toDate()).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) : 'Recently';
                     html += `
                         <div class="comment-card">
@@ -847,14 +884,13 @@
                                 <div class="comment-author">
                                     <div class="comment-avatar">${initial}</div>
                                     <div class="comment-author-info">
-                                        <h4>${c.name || 'Anonymous'}</h4>
-                                        ${c.email ? `<small>${c.email}</small>` : ''}
+                                        <h4>${esc(c.name || 'Anonymous')}</h4>
                                     </div>
                                 </div>
                                 <span class="comment-date">${date}</span>
                             </div>
-                            ${c.subject ? `<span class="comment-subject">${c.subject}</span>` : ''}
-                            <p class="comment-message">${c.message || ''}</p>
+                            ${c.subject ? `<span class="comment-subject">${esc(c.subject)}</span>` : ''}
+                            <p class="comment-message">${esc(c.message || '')}</p>
                         </div>
                     `;
                 });
@@ -922,13 +958,11 @@
                 error.style.display = 'none';
                 success.style.display = 'block';
 
-                let waMessage = `Hello Md. Ashfaqur Rahman Tanim!%0A%0A`;
-                waMessage += `*Name:* ${name}%0A`;
-                if (email) waMessage += `*Email:* ${email}%0A`;
-                waMessage += `*Message:* ${message}%0A%0A`;
-                waMessage += `_Sent from your portfolio website_`;
-
-                const waURL = `https://wa.me/8801612018221?text=${waMessage}`;
+                // encodeURIComponent keeps characters like & # ? and emoji from breaking the message
+                let text = `Hello Md. Ashfaqur Rahman Tanim!\n\n*Name:* ${name}\n`;
+                if (email) text += `*Email:* ${email}\n`;
+                text += `*Message:* ${message}\n\n_Sent from your portfolio website_`;
+                const waURL = `https://wa.me/8801612018221?text=${encodeURIComponent(text)}`;
 
                 addDoc(collection(db, 'comments'), {
                     name, email,
@@ -938,16 +972,15 @@
                     createdAt: serverTimestamp()
                 }).catch(console.error);
 
-                setTimeout(() => {
-                    window.open(waURL, '_blank');
-                    document.getElementById('contactForm').reset();
-                }, 500);
-
+                // open straight from the click so mobile browsers don't block the popup
+                window.open(waURL, '_blank', 'noopener');
+                this.reset();
                 setTimeout(() => { success.style.display = 'none'; }, 5000);
             });
         }
 
         async function init() {
+            const yr = document.getElementById('year'); if (yr) yr.textContent = new Date().getFullYear();
             setupNav();
             setupContact();
             setupCommentForm();
@@ -963,7 +996,7 @@
 
         document.addEventListener('DOMContentLoaded', init);
     </script>
-    <!-- PASTE THIS WHOLE BLOCK just before </body> in your portfolio (after your existing <script type="module">) -->
+
 <script>
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -982,18 +1015,19 @@
   #heroCanvas{position:absolute;inset:0;width:100%;height:100%;z-index:0}
   .caret{display:inline-block;width:2px;height:1.1em;background:var(--brass);margin-left:4px;vertical-align:-.15em;animation:blink 1s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
-  .theme-toggle{background:none;border:1px solid var(--line-strong);color:var(--brass-bright);width:38px;height:38px;border-radius:50%;cursor:pointer;transition:transform .4s,border-color .25s}
+  .theme-toggle{flex-shrink:0;position:relative;z-index:1100;margin-left:6px;background:none;border:1px solid var(--line-strong);color:var(--brass-bright);width:38px;height:38px;border-radius:50%;cursor:pointer;transition:transform .4s,border-color .25s}
   .theme-toggle:hover{border-color:var(--brass);transform:rotate(25deg)}
+  @media (max-width:768px){.theme-toggle{margin-left:auto}}
   .nav-links a.active{color:var(--brass-bright)}
   .nav-links a.active:after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:var(--brass)}
   .rv:not(.in){opacity:0}
   .rv.in{animation:rise .7s cubic-bezier(.2,.7,.2,1) var(--d,0s) backwards}
   @keyframes rise{from{opacity:0;transform:translateY(26px)}}
-  .stats{padding:56px 0;background:var(--bg)}
+  .stats{padding:56px 0;background:var(--bg);border-top:1px solid var(--line)}
   .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
   .stat{background:var(--bg);padding:28px 16px;text-align:center}
   .stat b{display:block;font-family:var(--serif);font-size:2.6rem;color:var(--brass-bright);line-height:1}
-  .stat span{color:var(--ink-faint);font-size:.85rem}
+  .stat span{display:block;margin-top:8px;color:var(--ink-faint);font-size:.85rem}
   .project-card,.skill-card,.video-card{position:relative;transform-style:preserve-3d;transition:transform .25s ease-out,border-color .3s}
   .project-card:after,.skill-card:after,.video-card:after{content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(233,200,119,.14),transparent 55%)}
   .project-card:hover:after,.skill-card:hover:after,.video-card:hover:after{opacity:1}
@@ -1005,8 +1039,7 @@
   #lightbox.open{opacity:1;pointer-events:auto}
   #lightbox img{max-width:92vw;max-height:88vh;border:1px solid var(--brass);transform:scale(.94);transition:transform .3s}
   #lightbox.open img{transform:none}
-  [data-theme=light]{--bg:#f6f1e4;--bg-alt:#ede6d3;--surface:#fffaf0;--surface-2:#f2ead6;--line:rgba(40,36,24,.12);--line-strong:rgba(40,36,24,.26);--ink:#23201a;--ink-dim:#5b5547;--ink-faint:#8a8270;--brass:#a07a22;--brass-bright:#7d5d12;--pine-bright:#2f6a47}
-  [data-theme=light] header.scrolled{background:rgba(246,241,228,.92)}
+  [data-theme=light]{--bg:#f6f1e4;--bg-alt:#ede6d3;--surface:#fffaf0;--surface-2:#f2ead6;--line:rgba(40,36,24,.12);--line-strong:rgba(40,36,24,.26);--ink:#23201a;--ink-dim:#5b5547;--ink-faint:#8a8270;--brass:#a07a22;--brass-bright:#7d5d12;--pine-bright:#2f6a47;--hdr:rgba(246,241,228,.92)}
   [data-theme=light] footer{background:#e6dfca}
   [data-theme=light] .website-preview{background:#fffaf0}
   [data-theme=light] .website-preview:before{background:#ede6d3}
@@ -1117,7 +1150,7 @@
   const rvSel = '.section-head,.value-card,.skill-card,.project-card,.website-card,.video-card,.timeline-item,.comment-card,.contact-item,.about-image,.about-text';
   const watch = r => $$(rvSel, r).forEach((el, i) => { if (el.dataset.rv) return; el.dataset.rv = 1; el.classList.add('rv'); el.style.setProperty('--d', (i % 6) * .07 + 's'); io.observe(el); });
 
-  /* ---------- live stats (count-up) ---------- */
+  /* ---------- live stats (count-up) — uses the real totals from the page's data cache ---------- */
   const cache = () => window.__cache || {};
   const countOf = k => {
     const c = cache()[k];
@@ -1146,7 +1179,8 @@
   const buildChips = () => {
     const src = Array.isArray(cache().projects) ? cache().projects.flatMap(p => p.tags || []) : $$('#projectsGrid .project-tag').map(t => t.textContent.trim());
     const tags = [...new Set(src)]; const row = $('#projectChips');
-    if (tags.length < 2) { row.innerHTML = ''; return; }
+    if (tags.length < 2) { row.innerHTML = ''; row.style.display = 'none'; return; }
+    row.style.display = '';
     if (row.dataset.sig === tags.join('|')) return; row.dataset.sig = tags.join('|');
     row.innerHTML = ['all', ...tags].map(t => `<button class="chip${t === tag ? ' active' : ''}" data-tag="${t.replace(/"/g, '&quot;')}">${t === 'all' ? 'All' : t.replace(/</g, '&lt;')}</button>`).join('');
   };
